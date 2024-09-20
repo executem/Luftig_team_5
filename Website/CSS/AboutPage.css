@@ -1,0 +1,34 @@
+.PersonFrame {
+    margin-top: 40px;
+    background-color: gray;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid black;
+
+}
+
+
+.FrameHolder {
+    margin: auto;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+}
+
+.PersonFrame img {
+    width: 300;
+    height: 310;
+}
+
+.PersonFrame p {
+    font-size:x-large;
+}
