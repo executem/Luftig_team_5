@@ -18,4 +18,20 @@
     height: 90%;
     background-color: brown;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.acStatus{
+    width: 80%;
+    height: 30%;
+    background-color: blue;
+    margin: auto;
+}
+
+.appModule{
+    width: 80%;
+    height: 65%;
+    background-color: yellow;
+    margin: auto;
 }
