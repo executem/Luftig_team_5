@@ -14,7 +14,12 @@
 
     <div class="PageView">
         <div class="startSimOutput">
-
+            <button class="startSimulation" onclick="startOutput()">
+                Start Simulation
+            </button>
+            <div class="output">
+                <p id="outputText">Output</p>
+            </div>
         </div>
         <div class="phoneSim">
             <div class="acStatus">
@@ -28,5 +33,11 @@
         </div>
     </div>
 
+    <script>
+        function startOutput(){
+            document.getElementById("outputText").innerHTML = outputText;
+        }
+
+    </script>
 
 </body>

@@ -11,6 +11,25 @@
     height: 90%;
     background-color: black;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.startSimulation{
+    width: 95%;
+    height: 15%;
+    background-color: green;
+    margin: auto;
+
+}
+
+.output{
+    width: 95%;
+    height: 80%;
+    background-color: azure;
+    margin: auto;
+
 }
 
 .phoneSim{
