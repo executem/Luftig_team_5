@@ -1,0 +1,36 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/webapp.css">
+
+</head>
+<body>
+    <div class="NavBar">
+        <img src="../Assets/chalmers.png" width="260" height="80">
+        <a class="Project.html" href="#home">Home</a>
+        <a href="ProjectPage.html">Project</a>
+        <a href="DiscussionPage.html">Discussion</a>
+        <a href="AboutPage.html">About</a>
+    </div>
+
+    <div class="PageView">
+        <div class="startSimOutput">
+            <button class="startSimulation" onclick="startOutput()">
+                Start Simulation
+            </button>
+            <div class="output">
+                <p id="outputText">Output</p>
+            </div>
+        </div>
+        <div class="phoneSim">
+
+        </div>
+    </div>
+
+    <script>
+        function startOutput(){
+            document.getElementById("outputText").innerHTML = outputText;
+        }
+
+    </script>
+
+</body>
