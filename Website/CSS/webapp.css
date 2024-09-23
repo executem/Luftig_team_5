@@ -1,0 +1,21 @@
+.PageView{
+    background-color: aqua;
+    width: 99vw;
+    height: 88vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.startSimOutput{
+    width: 65%;
+    height: 90%;
+    background-color: black;
+    margin: auto;
+}
+
+.phoneSim{
+    width: 30%;
+    height: 90%;
+    background-color: brown;
+    margin: auto;
+}
