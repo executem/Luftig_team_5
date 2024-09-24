@@ -1,8 +1,9 @@
 
 //const exampleTimes = ["none", "none", "none", "none", "none", "none", "none", "none", "go", "none", "none", "none", "none", "none", "none", "none", "none", "come"];
 let exampleTimes = new Map();
-exampleTimes.set("8", "go");
-exampleTimes.set("17", "come");
+//exampleTimes.set("8", "go");
+//exampleTimes.set("17", "come");
+exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
 function startOutput(){
@@ -64,4 +65,13 @@ function printOutput(ourAC, time){
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
+}
+
+function generateRandomTimes(){
+    exampleDay = new Map();
+    goTime = Math.floor(Math.random() * 22);
+    exampleDay.set(goTime.toString(), "go");
+    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    exampleDay.set(comeTime.toString(), "come");
+    return exampleDay;
 }
