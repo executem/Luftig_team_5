@@ -7,13 +7,13 @@ exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
 function startOutput(){
-    ourAC = new AC(100, 20);
+    ourRoom = new Room(20);
     var i = 1;                  //  set your counter to 1
 
     function timeLoop() {         //  create a loop function
       setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-            ourAC.calculateAC(i.toString())
-            printOutput(ourAC, i);   //  your code here
+            ourRoom.updateAC(i.toString())
+            printOutput(ourRoom.getAC(), i);   //  your code here
         i++;                    //  increment the counter
         if (i < 24) {           //  if the counter < 10, call the loop function
           timeLoop();             //  ..  again which will trigger another 
@@ -47,6 +47,7 @@ class AC{
 class Room{
     constructor(_temperature){
         this.temperature = _temperature;
+        this.roomAC = new AC(100,20);
     }
 
     getTemperature() {
@@ -57,11 +58,19 @@ class Room{
         this.temperature -= temperatureAmount
     }
 
+    updateAC(time){
+        this.roomAC.calculateAC(time);
+    }
+
+    getAC(){
+        return this.roomAC;
+    }
+
 }
 
-function printOutput(ourAC, time){
+function printOutput(AC, time){
     const outputTime = document.createTextNode("Current time: " + time.toString());
-    const outputAC = document.createTextNode(" - AC is currently at " + ourAC.getPower() + "\n");
+    const outputAC = document.createTextNode(" - AC is currently at " + AC.getPower() + "\n");
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
