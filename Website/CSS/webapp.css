@@ -24,11 +24,12 @@
 
 }
 
-.output{
+#output{
     width: 95%;
     height: 80%;
     background-color: azure;
     margin: auto;
+    white-space: pre-line;
 
 }
 

@@ -17,7 +17,7 @@
             <button class="startSimulation" onclick="startOutput()">
                 Start Simulation
             </button>
-            <div class="output">
+            <div id="output">
                 <p id="outputText">Output</p>
             </div>
         </div>
@@ -26,11 +26,6 @@
         </div>
     </div>
 
-    <script>
-        function startOutput(){
-            document.getElementById("outputText").innerHTML = outputText;
-        }
-
-    </script>
+    <script src="..\Javascript\backend.js"> </script>
 
 </body>
