@@ -30,6 +30,7 @@
     background-color: azure;
     margin: auto;
     white-space: pre-line;
+    overflow: scroll;
 
 }
 
