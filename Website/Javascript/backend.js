@@ -75,3 +75,11 @@ function generateRandomTimes(){
     exampleDay.set(comeTime.toString(), "come");
     return exampleDay;
 }
+
+function generateRandomDays(){
+    exampleDays = new Map();
+    for(let day = 1; day <= 10; day++) {
+        exampleDays.set(day.toString(), generateRandomTimes);
+    }
+    return exampleDays;
+}
