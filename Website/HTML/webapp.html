@@ -21,23 +21,32 @@
                 <p id="outputText">Output</p>
             </div>
         </div>
+
+        
+        <!-- view simulation -->  
         <div class="phoneSim">
             <div class="acStatus">
                 <img src="../Assets/ikea-AC.png" width="100%" height="100%" position="center">
 
             </div>
 
-            <div class="appModule">
-
+            <div class="appModule">  
+                <canvas id="lineChart"></canvas>
+                <canvas id="lineChart2"></canvas>
             </div>
         </div>
     </div>
 
     <script>
+
         function startOutput(){
             document.getElementById("outputText").innerHTML = outputText;
         }
 
     </script>
+
+     <!-- Chart import -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script src="../JS/Chart.js"></script> 
 
 </body>
