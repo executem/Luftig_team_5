@@ -35,3 +35,8 @@
     font-family:'Courier New', Courier, monospace;
     margin-top: 6vw;
 }
+
+.cardText {
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
