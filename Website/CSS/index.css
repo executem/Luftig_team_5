@@ -117,3 +117,37 @@ body {
   font-size: 1rem;
   font-weight: 300;
 }
+
+.content_wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 6vw;
+  align-items: center;
+}
+
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 6vw;
+  align-items: center;
+
+}
+
+.product_title {
+  font-weight: Bold;
+  font-size: 100;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+  color: white;
+}
+
+.description_title {
+  font-weight: Bold;
+  font-size: 30;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 0vw;
+  color: white;
+}
