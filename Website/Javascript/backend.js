@@ -53,7 +53,6 @@ class AC{
 class Room{
     constructor(_temperature){
         this.temperature = _temperature;
-        this.roomAC = new AC(100,20);
     }
 
     getTemperature() {
@@ -80,19 +79,27 @@ class Room{
         }
     }
 
-    updateAC(time){
-        this.roomAC.calculateAC(time);
-    }
-
-    getAC(){
-        return this.roomAC;
+    updateTemp(){
+        let desiredTemp = this.roomAC.getTemp();
+        if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
+            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
+            if(this.temperature < desiredTemp){
+                this.temperature = desiredTemp;
+            }
+        }
+        else{
+            this.temperature = Math.floor((this.temperature + (30 - this.temperature)*0.25) * 10)/10;
+            if(this.temperature > this.roomAC.getTemp() && this.roomAC.getPower() == 100){
+                this.temperature = this.roomAC.getTemp();
+            }
+        }
     }
 
 }
 
-function printOutput(AC, time){
-    const outputTime = document.createTextNode("Current time: " + time.toString());
-    const outputAC = document.createTextNode(" - AC is currently at " + AC.getPower() + "\n");
+function printOutput(ourAC, time){
+    const outputTime = document.createTextNode("Current time: " + time);
+    const outputAC = document.createTextNode(" - AC is currently at " + ourAC.getPower() + "\n");
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
@@ -101,16 +108,16 @@ function printOutput(AC, time){
 function generateRandomTimes(){
     exampleDay = new Map();
     goTime = Math.floor(Math.random() * 22);
-    exampleDay.set(goTime.toString(), "go");
+    exampleDay.set(goTime, "go");
     comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
-    exampleDay.set(comeTime.toString(), "come");
+    exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
 function generateRandomDays(){
     exampleDays = new Map();
     for(let day = 1; day <= 10; day++) {
-        exampleDays.set(day.toString(), generateRandomTimes);
+        exampleDays.set(day, generateRandomTimes);
     }
     return exampleDays;
 }
