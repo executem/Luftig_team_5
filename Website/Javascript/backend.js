@@ -8,22 +8,22 @@ const outputElement = document.getElementById("output");
 
 function startOutput(){
     ourRoom = new Room(28);
-    var i = 1;                  //  set your counter to 1
+    var i = 1;                 
 
-    function timeLoop() {         //  create a loop function
+    function timeLoop() {     
       setTimeout(function() { 
             outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
             ourRoom.updateAC(i)
             ourRoom.updateTemp();
-            printOutput(ourRoom.getAC(), i);   //  your code here
-        i++;                    //  increment the counter
-        if (i < 24) {           //  if the counter < 10, call the loop function
-          timeLoop();             //  ..  again which will trigger another 
-        }                       //  ..  setTimeout()
+            printOutput(ourRoom.getAC(), i); 
+        i++;                    
+        if (i < 24) {           
+          timeLoop();           
+        }                       
       }, 1000)
     }
     
-    timeLoop();                   //  start the loop
+    timeLoop();                  
 }
 
 class AC{
