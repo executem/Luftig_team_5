@@ -7,12 +7,14 @@ exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
 function startOutput(){
-    ourRoom = new Room(20);
+    ourRoom = new Room(28);
     var i = 1;                  //  set your counter to 1
 
     function timeLoop() {         //  create a loop function
-      setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+      setTimeout(function() { 
+            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
             ourRoom.updateAC(i.toString())
+            ourRoom.updateTemp();
             printOutput(ourRoom.getAC(), i);   //  your code here
         i++;                    //  increment the counter
         if (i < 24) {           //  if the counter < 10, call the loop function
@@ -42,6 +44,10 @@ class AC{
         return this.power;
     }
 
+    getTemp(){
+        return this.temperature
+    }
+
 }
 
 class Room{
@@ -51,11 +57,27 @@ class Room{
     }
 
     getTemperature() {
-        return temperature;
+        return this.temperature;
     }
 
     lowerTemperature(temperatureAmount){
         this.temperature -= temperatureAmount
+    }
+
+    updateTemp(){
+        let desiredTemp = this.roomAC.getTemp();
+        if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
+            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
+            if(this.temperature < desiredTemp){
+                this.temperature = desiredTemp;
+            }
+        }
+        else{
+            this.temperature = Math.floor((this.temperature + (30 - this.temperature)*0.25) * 10)/10;
+            if(this.temperature > this.roomAC.getTemp() && this.roomAC.getPower() == 100){
+                this.temperature = this.roomAC.getTemp();
+            }
+        }
     }
 
     updateAC(time){
