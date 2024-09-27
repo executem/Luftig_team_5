@@ -13,7 +13,7 @@ function startOutput(){
     function timeLoop() {         //  create a loop function
       setTimeout(function() { 
             outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
-            ourRoom.updateAC(i.toString())
+            ourRoom.updateAC(i)
             ourRoom.updateTemp();
             printOutput(ourRoom.getAC(), i);   //  your code here
         i++;                    //  increment the counter
@@ -53,6 +53,7 @@ class AC{
 class Room{
     constructor(_temperature){
         this.temperature = _temperature;
+        this.roomAC = new AC(100,20);
     }
 
     getTemperature() {
@@ -79,23 +80,16 @@ class Room{
         }
     }
 
-    updateTemp(){
-        let desiredTemp = this.roomAC.getTemp();
-        if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
-            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
-            if(this.temperature < desiredTemp){
-                this.temperature = desiredTemp;
-            }
-        }
-        else{
-            this.temperature = Math.floor((this.temperature + (30 - this.temperature)*0.25) * 10)/10;
-            if(this.temperature > this.roomAC.getTemp() && this.roomAC.getPower() == 100){
-                this.temperature = this.roomAC.getTemp();
-            }
-        }
+    updateAC(time){
+        this.roomAC.calculateAC(time);
+    }
+
+    getAC(){
+        return this.roomAC;
     }
 
 }
+
 
 function printOutput(ourAC, time){
     const outputTime = document.createTextNode("Current time: " + time);
