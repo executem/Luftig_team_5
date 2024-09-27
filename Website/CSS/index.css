@@ -142,6 +142,7 @@ body {
   margin-top: 2vh;
   margin-bottom: 1vh;
   color: white;
+  animation: fadeIn 5s;
 }
 
 .description_title {
@@ -150,4 +151,14 @@ body {
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   margin-top: 0vw;
   color: white;
+  animation: fadeIn 5s;
+}
+
+.ac_front_image {
+  animation: fadeIn 10s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
