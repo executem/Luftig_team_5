@@ -1,30 +1,79 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+<head>
+    <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/webapp.css">
 
-        <!-- Include JQuery --> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-    </head>
-    <body>
+</head>
+<body>
+    <div class="NavBar">
+        <img src="../Assets/chalmers.png" width="260" height="80">
+        <a href="index.html">Home</a>
+        <a href="ProjectPage.html">Project</a>
+        <a href="DiscussionPage.html">Discussion</a>
+        <a href="AboutPage.html">About</a>
+        <p class="CourseTitle"> TEK830 Digitalization and AI in practice</p>
+      </div> 
+
+    <div class="PageView">
+        <div class="startSimOutput">
+            <button class="startSimulation" onclick="startOutput()">
+                Start Simulation
+            </button>
+            <div id="output">
+                <p id="outputText">Output</p>
+            </div>
+        </div>
+
         
-        <div class="NavBar">
-            <img src="../Assets/chalmers.png" width="260" height="80">
-            <a href="index.html">Home</a>
-            <a href="ProjectPage.html">Project</a>
-            <a href="DiscussionPage.html">Discussion</a>
-            <a href="AboutPage.html">About</a>
-            <p class="CourseTitle"> TEK830 Digitalization and AI in practice</p>
-          </div> 
+        <!-- view simulation -->  
+        <div class="phoneSim">
+            <div class="acStatus">
+                <img src="../Assets/ikea-AC.png" width="100%" height="100%" position="center">
 
+            </div>
 
-          <footer class="footer">
-            <ul class="menu">
-              <li class="menu__item"><a class="menu__link" href="index.html">Home</a></li>
-              <li class="menu__item"><a class="menu__link" href="ProjectPage.html">Project</a></li>
-              <li class="menu__item"><a class="menu__link" href="DiscussionPage.html">Discussion</a></li>
-              <li class="menu__item"><a class="menu__link" href="AboutPage.html">Contact</a></li>
-            </ul>
-        </footer>
+            <div class="appModule">  
+                <div class="timeTab">
+                    <button class="timeTabButton" onClick="openChart(event, 'dayChart')" id="defaultOpen">Day</button>
+                    <button class="timeTabButton" onClick="openChart(event, 'yearChart')">Year</button>
+                </div>
 
-    </body>
-</html>
+                <div id="yearChart" class="chartTab">
+                    <canvas id="lineChart2" class="dataChart"></canvas>
+                </div>
+                <div id="dayChart" class="chartTab">
+                    <canvas id="lineChart" class="dataChart"></canvas>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+    <footer class="footer">
+        <ul class="menu">
+          <li class="menu__item"><a class="menu__link" href="index.html">Home</a></li>
+          <li class="menu__item"><a class="menu__link" href="ProjectPage.html">Project</a></li>
+          <li class="menu__item"><a class="menu__link" href="DiscussionPage.html">Discussion</a></li>
+          <li class="menu__item"><a class="menu__link" href="AboutPage.html">Contact</a></li>
+        </ul>
+    </footer>
+
+    <script>
+
+        //render chart on pageload
+        window.onload = function(){
+        document.getElementById("defaultOpen").click(); };
+
+        function startOutput(){
+            document.getElementById("outputText").innerHTML = outputText;
+        }
+
+    </script>
+
+    <script src="..\Javascript\backend.js"> </script>
+
+     <!-- Chart import -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+    <!-- Chart scripts -->
+    <script src="../JS/Chart.js"></script> 
+
+</body>
