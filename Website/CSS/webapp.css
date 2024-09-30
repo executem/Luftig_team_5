@@ -60,3 +60,43 @@
     overflow: scroll;
 }
 
+.timeTab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.timeTab button {
+    background-color: inherit;
+    width: 50%;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.2s;
+}
+
+.timeTab button:hover {
+    background-color: #ddd;
+}
+
+.timeTab button.active {
+    background-color: #ccc;
+}
+
+.chartTab {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    position: relative;
+}
+
+.dataChart {
+    width: 100%;
+    height: 100%;
+}
+
+
+

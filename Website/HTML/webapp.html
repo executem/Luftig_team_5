@@ -31,26 +31,39 @@
             </div>
 
             <div class="appModule">  
-                <canvas id="lineChart"></canvas>
-                <canvas id="lineChart2"></canvas>
-            </div>
+                <div class="timeTab">
+                    <button class="timeTabButton" onClick="openChart(event, 'dayChart')" id="defaultOpen">Day</button>
+                    <button class="timeTabButton" onClick="openChart(event, 'yearChart')">Year</button>
+                </div>
+
+                <div id="yearChart" class="chartTab">
+                    <canvas id="lineChart2" class="dataChart"></canvas>
+                </div>
+                <div id="dayChart" class="chartTab">
+                    <canvas id="lineChart" class="dataChart"></canvas>
+                </div>
+            </div>  
         </div>
     </div>
 
-<<<<<<< HEAD
     <script>
+
+        //render chart on pageload
+        window.onload = function(){
+        document.getElementById("defaultOpen").click(); };
 
         function startOutput(){
             document.getElementById("outputText").innerHTML = outputText;
         }
 
     </script>
-=======
+
     <script src="..\Javascript\backend.js"> </script>
->>>>>>> origin/webapp_backend
 
      <!-- Chart import -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+    <!-- Chart scripts -->
     <script src="../JS/Chart.js"></script> 
 
 </body>
