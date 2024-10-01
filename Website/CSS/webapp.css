@@ -1,0 +1,102 @@
+.PageView{
+    background-color: aqua;
+    width: 99vw;
+    height: 88vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.startSimOutput{
+    width: 65%;
+    height: 90%;
+    background-color: black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.startSimulation{
+    width: 95%;
+    height: 15%;
+    background-color: green;
+    margin: auto;
+
+}
+
+#output{
+    width: 95%;
+    height: 80%;
+    background-color: azure;
+    margin: auto;
+    white-space: pre-line;
+    overflow: scroll;
+
+}
+
+.phoneSim{
+    width: 30%;
+    height: 90%;
+    background-color: brown;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.acStatus{
+    width: 80%;
+    height: 30%;
+    background-color: blue;
+    margin: auto;
+}
+
+.appModule{
+    width: 80%;
+    height: 65%;
+    background-color: yellow;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.timeTab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.timeTab button {
+    background-color: inherit;
+    width: 50%;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.2s;
+}
+
+.timeTab button:hover {
+    background-color: #ddd;
+}
+
+.timeTab button.active {
+    background-color: #ccc;
+}
+
+.chartTab {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    position: relative;
+}
+
+.dataChart {
+    width: 100%;
+    height: 100%;
+}
+
+
+

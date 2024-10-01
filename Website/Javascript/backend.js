@@ -7,21 +7,23 @@ exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
 function startOutput(){
-    let ourAC = new AC(100, 20);
-    var i = 1;                  //  set your counter to 1
+    ourRoom = new Room(28);
+    var i = 1;                 
 
-    function timeLoop() {         //  create a loop function
-      setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-            ourAC.calculateAC(i)
-            printOutput(ourAC, i);   //  your code here
-        i++;                    //  increment the counter
-        if (i < 24) {           //  if the counter < 10, call the loop function
-          timeLoop();             //  ..  again which will trigger another 
-        }                       //  ..  setTimeout()
+    function timeLoop() {     
+      setTimeout(function() { 
+            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
+            ourRoom.updateAC(i)
+            ourRoom.updateTemp();
+            printOutput(ourRoom.getAC(), i); 
+        i++;                    
+        if (i < 24) {           
+          timeLoop();           
+        }                       
       }, 1000)
     }
     
-    timeLoop();                   //  start the loop
+    timeLoop();                  
 }
 
 class AC{
@@ -42,11 +44,16 @@ class AC{
         return this.power;
     }
 
+    getTemp(){
+        return this.temperature
+    }
+
 }
 
 class Room{
     constructor(_temperature){
         this.temperature = _temperature;
+        this.roomAC = new AC(100,20);
     }
 
     getTemperature() {
@@ -57,7 +64,32 @@ class Room{
         this.temperature -= temperatureAmount
     }
 
+    updateTemp(){
+        let desiredTemp = this.roomAC.getTemp();
+        if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
+            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
+            if(this.temperature < desiredTemp){
+                this.temperature = desiredTemp;
+            }
+        }
+        else{
+            this.temperature = Math.floor((this.temperature + (30 - this.temperature)*0.25) * 10)/10;
+            if(this.temperature > this.roomAC.getTemp() && this.roomAC.getPower() == 100){
+                this.temperature = this.roomAC.getTemp();
+            }
+        }
+    }
+
+    updateAC(time){
+        this.roomAC.calculateAC(time);
+    }
+
+    getAC(){
+        return this.roomAC;
+    }
+
 }
+
 
 function printOutput(ourAC, time){
     const outputTime = document.createTextNode("Current time: " + time);
@@ -68,16 +100,16 @@ function printOutput(ourAC, time){
 }
 
 function generateRandomTimes(){
-    let exampleDay = new Map();
-    let goTime = Math.floor(Math.random() * 22);
-     exampleDay.set(goTime, "go");
-    let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
-     exampleDay.set(comeTime, "come");
+    exampleDay = new Map();
+    goTime = Math.floor(Math.random() * 22);
+    exampleDay.set(goTime, "go");
+    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
 function generateRandomDays(){
-    let exampleDays = new Map();
+    exampleDays = new Map();
     for(let day = 1; day <= 10; day++) {
         exampleDays.set(day, generateRandomTimes);
     }
