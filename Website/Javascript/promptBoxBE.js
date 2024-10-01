@@ -15,13 +15,16 @@ function updateText(newText){
   textBox.textContent = newText;
 }
 // SEND IN ACCEPT CALLBACKFUNCTION
-function acceptChanges(){
+function acceptChanges(callBack){
   updateText("Accept");
+  callBack();
 }
 
 // SEND IN DECLINE CALLBACKFUNCTION
-function declineChanges(){
+function declineChanges(callback){
   updateText("Decline");
+  callback();
+
 }
 
 
