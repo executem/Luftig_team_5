@@ -7,7 +7,7 @@ exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
 function startOutput(){
-    ourRoom = new Room(28);
+    let ourRoom = new Room(28);
     var i = 1;                 
 
     function timeLoop() {     
@@ -98,18 +98,20 @@ function printOutput(ourAC, time){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
 }
-
+function promptCallback(){
+    outputElement.appendChild(document.createTextNode("Callback test"));
+}
 function generateRandomTimes(){
-    exampleDay = new Map();
-    goTime = Math.floor(Math.random() * 22);
+    let exampleDay = new Map();
+    let goTime = Math.floor(Math.random() * 22);
     exampleDay.set(goTime, "go");
-    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
     exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
 function generateRandomDays(){
-    exampleDays = new Map();
+    let exampleDays = new Map();
     for(let day = 1; day <= 10; day++) {
         exampleDays.set(day, generateRandomTimes);
     }

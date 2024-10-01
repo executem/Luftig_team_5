@@ -10,10 +10,13 @@ function toggleVisibility(ev){
   
 
 }
+
 const textBox = document.getElementById("promptBoxText");
 function updateText(newText){
   textBox.textContent = newText;
 }
+
+
 // SEND IN ACCEPT CALLBACKFUNCTION
 function acceptChanges(callBack){
   updateText("Accept");
