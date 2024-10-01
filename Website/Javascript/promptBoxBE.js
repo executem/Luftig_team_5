@@ -14,12 +14,12 @@ const textBox = document.getElementById("promptBoxText");
 function updateText(newText){
   textBox.textContent = newText;
 }
-
+// SEND IN ACCEPT CALLBACKFUNCTION
 function acceptChanges(){
   updateText("Accept");
 }
 
-
+// SEND IN DECLINE CALLBACKFUNCTION
 function declineChanges(){
   updateText("Decline");
 }
