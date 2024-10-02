@@ -32,16 +32,23 @@
             </div>
 
             <div class="appModule">  
-                <div class="timeTab">
-                    <button class="timeTabButton" onClick="openChart(event, 'dayChart')" id="defaultOpen">Day</button>
-                    <button class="timeTabButton" onClick="openChart(event, 'yearChart')">Year</button>
+                
+                <button class="timeTabButton" onClick="timeSelect(event, 'dayChart')" id="defaultOpen">Day</button>
+                <button class="timeTabButton" onClick="timeSelect(event, 'yearChart')">Year</button>
+                
+                
+                <div id="yearChart" class="chartTab">
+                    <!-- <button class="dataSwitchButton" onClick="openChart(event, 'energyYearChart')">Energy</button>
+                    <button class="dataSwitchButton" onClick="openChart(event, 'tempYearChart')">Temperature</button> -->
+                    <canvas id="energyYearChart" class="dataChart"></canvas>
+                    <canvas id="tempYearChart" class="dataChart"></canvas>
                 </div>
 
-                <div id="yearChart" class="chartTab">
-                    <canvas id="lineChart2" class="dataChart"></canvas>
-                </div>
                 <div id="dayChart" class="chartTab">
-                    <canvas id="lineChart" class="dataChart"></canvas>
+                    <!-- <button class="dataSwitchButton" onClick="openChart(event, 'energyDayChart')" id="defaultOpen">Energy</button>
+                    <button class="dataSwitchButton" onClick="openChart(event, 'tempDayChart')">Temperature</button> -->
+                    <canvas id="energyDayChart" class="dataChart"></canvas>
+                    <canvas id="tempDayChart" class="dataChart"></canvas>
                 </div>
             </div>  
         </div>
