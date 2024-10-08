@@ -98,8 +98,14 @@ function printOutput(ourAC, time){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
 }
-function promptCallback(){
-    outputElement.appendChild(document.createTextNode("Callback test"));
+function promptCallback(bool){
+    if(bool){
+        outputElement.appendChild(document.createTextNode("Callback true"));
+    } else{
+        outputElement.appendChild(document.createTextNode("Callback false"));
+    }
+
+    
 }
 function generateRandomTimes(){
     let exampleDay = new Map();
