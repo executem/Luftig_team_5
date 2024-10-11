@@ -6,6 +6,14 @@ let exampleTimes = new Map();
 exampleTimes = generateRandomTimes()
 const outputElement = document.getElementById("output");
 
+
+//create abject reachable from chart.js
+window.sharedData = {
+    acPower: [],
+    roomTemperature: [],
+    time: []
+}; 
+
 function startOutput(){
     let ourRoom = new Room(28);
     var i = 1;                 
@@ -82,6 +90,9 @@ class Room{
 
     updateAC(time){
         this.roomAC.calculateAC(time);
+        window.sharedData.acPower.push(this.roomAC.getPower());
+        window.sharedData.roomTemperature.push(this.getTemperature());
+        window.sharedData.time.push(time);
     }
 
     getAC(){

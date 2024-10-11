@@ -11,46 +11,89 @@ var today = date.toISOString().split('T')[0];
 
 
 
-const data2 = {
-    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+const energyYearData = {
+    labels: [],
     datasets: [{
         label: "Energy usage ("+ year +")",
-        data: [0, 10, 5, 2, 20, 30, 45, 50, 60, 50, 55, 55],
+        data: [],
         fill: true,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1
     }]
 };
 
-const data = {
-    labels: ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"],
+const tempYearData = {
+    labels: [],
+    datasets: [{
+        label: "Temperature ("+ year +")",
+        data: [],
+        fill: true,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1
+    }]
+};
+
+const energyDayData = {
+    labels: [],
     datasets: [{
         label: "Energy usage ("+ today +")",
-        data: [1, 2, 4, 3, 1, 3, 5, 3, 1, 3, 5, 3],
+        data: [],
         fill: true,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1
     }]
 };
 
-const CHART = document.getElementById("lineChart");
-const CHART2 = document.getElementById("lineChart2");
+const tempDayData = {
+    labels: [],
+    datasets: [{
+        label: "Temperature ("+ today +")",
+        data: [],
+        fill: true,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1
+    }]
+};
 
-console.log(CHART);
+const ENERGYDAYCHART = document.getElementById("energyDayChart");
+const TEMPDAYCHART = document.getElementById("tempDayChart");
+const ENERGYYEARCHART = document.getElementById("energyYearChart");
+const TEMPYEARCHART = document.getElementById("tempYearChart");
+
+console.log(ENERGYDAYCHART);
+console.log(ENERGYYEARCHART);
 
 
-let lineChart = new Chart(CHART, {
+let energyDayChart = new Chart(ENERGYDAYCHART, {
     type: "line",
-    data: data,
+    data: energyDayData,
     options: {
         legend: {
             onClick: null
         }
     }
 });
-let lineChart2 = new Chart(CHART2, {
+let tempDayChart = new Chart(TEMPDAYCHART, {
     type: "line",
-    data: data2,
+    data: tempDayData,
+    options: {
+        legend: {
+            onClick: null
+        }
+    }
+});
+let energyYearChart = new Chart(ENERGYYEARCHART, {
+    type: "line",
+    data: energyYearData,
+    options: {
+        legend: {
+            onClick: null
+        }
+    }
+});
+let tempYearChart = new Chart(TEMPYEARCHART, {
+    type: "line",
+    data: tempYearData,
     options: {
         legend: {
             onClick: null
@@ -58,7 +101,40 @@ let lineChart2 = new Chart(CHART2, {
     }
 });
 
-function openChart(evt, chartType) {
+function updateEnergyDayChart(){
+    energyDayChart.data.labels = window.sharedData.time;
+    energyDayChart.data.datasets[0].data = window.sharedData.acPower;
+    energyDayChart.update();
+}
+
+function updateTempDayChart(){
+    tempDayChart.data.labels = window.sharedData.time;
+    tempDayChart.data.datasets[0].data = window.sharedData.roomTemperature;
+    tempDayChart.update();
+}
+
+function updateEnergyYearChart(){
+    energyYearChart.data.labels = window.sharedData.time;
+    energyYearChart.data.datasets[0].data = window.sharedData.acPower;
+    energyYearChart.update();
+}
+
+function updateTempYearChart(){
+    tempYearChart.data.labels = window.sharedData.time;
+    tempYearChart.data.datasets[0].data = window.sharedData.roomTemperature;
+    tempYearChart.update();
+}
+
+function updateCharts(){
+    setInterval(updateEnergyDayChart, 1000);
+    setInterval(updateEnergyYearChart, 1000);
+    setInterval(updateTempDayChart, 1000);
+    setInterval(updateTempYearChart, 1000);
+}
+
+updateCharts();
+
+function timeSelect(evt, chartType) {
     var i, chartTab, timeTabButton;
 
     chartTab = document.getElementsByClassName("chartTab");
@@ -75,4 +151,20 @@ function openChart(evt, chartType) {
     evt.currentTarget.className += " active";
 }
 
+/*function openChart(evt, chartType) {
+    var i, dataChart, dataSwitchButton;
+
+    dataChart = document.getElementsByClassName("dataChart");
+    for (i = 0; i < dataChart.length; i++) {
+        dataChart[i].style.display = "none";
+    }
+
+    dataSwitchButton = document.getElementsByClassName("dataSwitchButton");
+    for (i = 0; i < dataSwitchButton.length; i++) {
+        dataSwitchButton[i].className = dataSwitchButton[i].className.replace(" active", "");
+    }
+
+    document.getElementById(chartType).style.display = "block";
+    evt.currentTarget.className += " active";
+}*/
 

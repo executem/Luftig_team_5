@@ -8,9 +8,14 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     border: 4px solid black;
-    margin: auto;
+    margin-top: 10vh;
+    margin-bottom: 30vh;
+    max-width: 30vh;
+    max-height: 50vh;
+    font-size: small;
+    text-wrap: nowrap;
 }
 
 
@@ -20,8 +25,8 @@
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 60px;
+    justify-content: space-evenly;
+    
 }
 
 .PersonFrame img {
@@ -32,9 +37,8 @@
 }
 
 .PersonFrame p {
-    font-size:x-large;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
+    font-size: 1rem;
 }
 
 
