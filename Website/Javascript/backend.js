@@ -4,6 +4,9 @@ let exampleTimes = new Map();
 //exampleTimes.set("8", "go");
 //exampleTimes.set("17", "come");
 exampleTimes = generateRandomTimes()
+//let exampleTemperature = new Map();
+let exampleTemperature = [20, 19, 20, 22, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 34, 32, 31, 29, 27, 25]
+
 const outputElement = document.getElementById("output");
 
 
@@ -15,15 +18,15 @@ window.sharedData = {
 }; 
 
 function startOutput(){
-    ourRoom = new Room(28);
-    var i = 1;                 
+    ourRoom = new Room(20);
+    var i = 0;                 
 
     function timeLoop() {     
         let tempPower = 100;
         setTimeout(function() { 
             tempPower = ourRoom.roomAC.getPower();
             ourRoom.updateAC(i)
-            ourRoom.updateTemp();
+            ourRoom.updateTemp(i);
             if(tempPower != ourRoom.roomAC.getPower()) {
                 printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
             }
@@ -76,7 +79,7 @@ class Room{
         this.temperature -= temperatureAmount
     }
 
-    updateTemp(){
+    updateTemp(time){
         let desiredTemp = this.roomAC.getTemp();
         if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
             this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
@@ -85,7 +88,7 @@ class Room{
             }
         }
         else{
-            this.temperature = Math.floor((this.temperature + (30 - this.temperature)*0.25) * 10)/10;
+            this.temperature = Math.floor((this.temperature + (exampleTemperature[time] - this.temperature)*0.25) * 10)/10;
             if(this.temperature > this.roomAC.getTemp() && this.roomAC.getPower() == 100){
                 this.temperature = this.roomAC.getTemp();
             }
