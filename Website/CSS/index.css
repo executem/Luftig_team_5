@@ -70,6 +70,7 @@ body {
   border-top: 4px solid black;
   box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px, rgba(0, 0, 0, 0.22) 20px 20px 20px;
   position: relative;
+  bottom:0px;
   width: 100%;
   background: #aaaaaa;
   min-height: 100px;
@@ -78,8 +79,6 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 0vh;
-
 }
 
 .menu {
@@ -123,7 +122,7 @@ body {
   justify-content: center;
   margin-top: 6vw;
   align-items: center;
-  margin-bottom: 10vw;
+  margin-bottom: 10vh;
 }
 
 
