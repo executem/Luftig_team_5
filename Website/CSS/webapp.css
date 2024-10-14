@@ -37,9 +37,17 @@
     background-color: black;
 }
 
+#infoText{
+    font-size: 1rem;
+    color: white;
+    height: 2%;
+    width: 98%;
+    margin-left: 1%;
+}
+
 #output{
     width: 98%;
-    height: 80%;
+    height: 78%;
     background-color: azure;
     margin: auto;
     white-space: pre-line;
@@ -68,11 +76,12 @@
 .appModule{
     width: 95%;
     height: 65%;
-    background-color: yellow;
+    background-color: azure;
     margin: auto;
     display: flex;
     flex-direction: column;
     overflow: scroll;
+    border-radius: 5px;
 }
 
 .timeTab {
