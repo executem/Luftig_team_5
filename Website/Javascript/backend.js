@@ -15,22 +15,26 @@ window.sharedData = {
 }; 
 
 function startOutput(){
-    let ourRoom = new Room(28);
+    ourRoom = new Room(28);
     var i = 1;                 
 
     function timeLoop() {     
-      setTimeout(function() { 
-            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
+        let tempPower = 100;
+        setTimeout(function() { 
+            tempPower = ourRoom.roomAC.getPower();
             ourRoom.updateAC(i)
             ourRoom.updateTemp();
-            printOutput(ourRoom.getAC(), i); 
-        i++;                    
-        if (i < 24) {           
-          timeLoop();           
-        }                       
-      }, 1000)
+            if(tempPower != ourRoom.roomAC.getPower()) {
+                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
+            }
+
+            i++;                    
+            if (i < 24) {           
+                timeLoop();           
+            }                 
+        }, 1000)
     }
-    
+    printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
     timeLoop();                  
 }
 
@@ -102,33 +106,26 @@ class Room{
 }
 
 
-function printOutput(ourAC, time){
-    const outputTime = document.createTextNode("Current time: " + time);
-    const outputAC = document.createTextNode(" - AC is currently at " + ourAC.getPower() + "\n");
+function printOutput(ourAC, time, temperature){
+    outputElement.appendChild(document.createTextNode("Current time: " + time + ":00 - "));
+    const outputTime = document.createTextNode("Current temp: " + temperature + " - ");
+    const outputAC = document.createTextNode("AC is currently at " + ourAC.getPower() + "\n");
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
 }
-function promptCallback(bool){
-    if(bool){
-        outputElement.appendChild(document.createTextNode("Callback true"));
-    } else{
-        outputElement.appendChild(document.createTextNode("Callback false"));
-    }
 
-    
-}
 function generateRandomTimes(){
-    let exampleDay = new Map();
-    let goTime = Math.floor(Math.random() * 22);
+    exampleDay = new Map();
+    goTime = Math.floor(Math.random() * 22);
     exampleDay.set(goTime, "go");
-    let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
     exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
 function generateRandomDays(){
-    let exampleDays = new Map();
+    exampleDays = new Map();
     for(let day = 1; day <= 10; day++) {
         exampleDays.set(day, generateRandomTimes);
     }
