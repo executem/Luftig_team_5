@@ -1,10 +1,4 @@
 
-//const exampleTimes = ["none", "none", "none", "none", "none", "none", "none", "none", "go", "none", "none", "none", "none", "none", "none", "none", "none", "come"];
-let exampleTimes = new Map();
-//exampleTimes.set("8", "go");
-//exampleTimes.set("17", "come");
-exampleTimes = generateTypicalTimes()
-//let exampleTemperature = new Map();
 let exampleTemperature = [20, 19, 20, 22, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 34, 32, 31, 29, 27, 25]
 
 const outputElement = document.getElementById("output");
@@ -17,29 +11,33 @@ window.sharedData = {
     time: []
 }; 
 
+var weekQueue = [];
+var exampleWeek = generateTypicalWeek();
+
+
 function startOutput(){
-    ourRoom = new Room(20);
-    var i = 0;                 
+    ourRoom = new Room(20); 
 
-    function timeLoop() { 
-        exampleTimes = generateTypicalTimes()
-    
-        let tempPower = 100;
-        setTimeout(function() { 
-            tempPower = ourRoom.roomAC.getPower();
-            ourRoom.updateAC(i)
-            ourRoom.updateTemp(i);
-            if(tempPower != ourRoom.roomAC.getPower()) {
-                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
-            }
+    for (let day = 1; day <= 7; day++) {
+        function timeLoop() { 
+            let i = 0;
+            let tempPower = 100;
+            setTimeout(function() { 
+                tempPower = ourRoom.roomAC.getPower();
+                ourRoom.updateAC(i, exampleWeek[day]);
+                ourRoom.updateTemp(i);
+                if(tempPower != ourRoom.roomAC.getPower()) {
+                    printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
+                }
 
-            i++;                    
-            if (i < 24) {           
-                timeLoop();           
-            }                 
-        }, 1000)
+                i++;                    
+                if (i < 24) {           
+                    timeLoop();           
+                }                 
+            }, 1000)
+        }
     }
-    printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
+    printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
     timeLoop();                  
 }
 
@@ -49,10 +47,10 @@ class AC{
         this.temperature = _temperature;
     }
 
-    calculateAC(time) {
-        if(exampleTimes.get(time) == "come"){
+    calculateAC(time, day2) {
+        if(day2.get(time) == "come"){
             this.power = 100;                } 
-        else if(exampleTimes.get(time) == "go"){
+        else if(day2.get(time) == "go"){
             this.power = 0;
         }
     }
@@ -97,8 +95,8 @@ class Room{
         }
     }
 
-    updateAC(time){
-        this.roomAC.calculateAC(time);
+    updateAC(time, day1){
+        this.roomAC.calculateAC(time, day1);
         window.sharedData.acPower.push(this.roomAC.getPower());
         window.sharedData.roomTemperature.push(this.getTemperature());
         window.sharedData.time.push(time);
@@ -168,14 +166,14 @@ function generateTypicalTimes(){
     return exampleDay;
 }
 
-function generateTypicalDays(){
-    let exampleDays = new Map();
-    for (let day = 1; day <= 10; day++) {
+function generateTypicalWeek(){
+    let exampleWeek = new Map();
+    for (let day = 1; day <= 20; day++) {
         if (day % 7 === 6 || day % 7 === 0) { //kolla om de e helg
-            exampleDays.set(day, generateRandomTimes());
+            exampleWeek.set(day, generateRandomTimes());
         } else {
-            exampleDays.set(day, generateTypicalTimes());
+            exampleWeek.set(day, generateTypicalTimes());
         }
     }
-    return exampleDays;
+    return exampleWeek;
 }
