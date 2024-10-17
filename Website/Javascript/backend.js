@@ -24,7 +24,7 @@ function startOutput(){
             let tempPower = 100;
             setTimeout(function() { 
                 tempPower = ourRoom.roomAC.getPower();
-                ourRoom.updateAC(i, exampleWeek[day]);
+                ourRoom.updateAC(i, exampleWeek.get(day));
                 ourRoom.updateTemp(i);
                 if(tempPower != ourRoom.roomAC.getPower()) {
                     printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
@@ -120,49 +120,19 @@ function printOutput(ourAC, time, temperature){
 
 function generateRandomTimes() {
     let exampleDay = new Map();
-    let goTimes = [];
-    let comeTimes = [];
-
-    for (let i = 0; i < 3; i++) {
-        let goTime = Math.floor(Math.random() * 22);
-        let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
-        goTimes.push(goTime);
-        comeTimes.push(comeTime);
-    }
-
-    comeTimes.push(23);
-    goTimes.push(7); 
-
-    goTimes.sort((a, b) => a - b);
-    comeTimes.sort((a, b) => a - b);
-
-    goTimes.forEach(time => exampleDay.set(time, "go"));
-    comeTimes.forEach(time => exampleDay.set(time, "come"));
-
+    let goTime = Math.floor(Math.random() * 22);
+    exampleDay.set(goTime, "go");
+    let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
 function generateTypicalTimes(){
     let exampleDay = new Map();
-    let goTimes = [8]; 
-    let comeTimes = [17]; 
-
-    for (let i = 0; i < 2; i++) {
-        let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
-        let comeTime = 17 + Math.floor(Math.random() * 4) - 1; 
-        goTimes.push(goTime);
-        comeTimes.push(comeTime);
-    }
-
-    comeTimes.push(23); 
-    goTimes.push(7); 
-
-    goTimes.sort((a, b) => a - b);
-    comeTimes.sort((a, b) => a - b);
-
-    goTimes.forEach(time => exampleDay.set(time, "go"));
-    comeTimes.forEach(time => exampleDay.set(time, "come"));
-
+    let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
+    exampleDay.set(goTime, "go");
+    let comeTime = 17 + Math.floor(Math.random() * 4) - 1; 
+    exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
