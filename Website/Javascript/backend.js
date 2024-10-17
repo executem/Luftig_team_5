@@ -3,7 +3,7 @@
 let exampleTimes = new Map();
 //exampleTimes.set("8", "go");
 //exampleTimes.set("17", "come");
-exampleTimes = generateTypicalTimes()
+exampleTimes = generateRandomTimes()
 //let exampleTemperature = new Map();
 let exampleTemperature = [20, 19, 20, 22, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 34, 32, 31, 29, 27, 25]
 
@@ -21,9 +21,7 @@ function startOutput(){
     ourRoom = new Room(20);
     var i = 0;                 
 
-    function timeLoop() { 
-        exampleTimes = generateTypicalTimes()
-    
+    function timeLoop() {     
         let tempPower = 100;
         setTimeout(function() { 
             tempPower = ourRoom.roomAC.getPower();
@@ -120,62 +118,19 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputAC);
 }
 
-function generateRandomTimes() {
-    let exampleDay = new Map();
-    let goTimes = [];
-    let comeTimes = [];
-
-    for (let i = 0; i < 3; i++) {
-        let goTime = Math.floor(Math.random() * 22);
-        let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
-        goTimes.push(goTime);
-        comeTimes.push(comeTime);
-    }
-
-    comeTimes.push(23);
-    goTimes.push(7); 
-
-    goTimes.sort((a, b) => a - b);
-    comeTimes.sort((a, b) => a - b);
-
-    goTimes.forEach(time => exampleDay.set(time, "go"));
-    comeTimes.forEach(time => exampleDay.set(time, "come"));
-
+function generateRandomTimes(){
+    exampleDay = new Map();
+    goTime = Math.floor(Math.random() * 22);
+    exampleDay.set(goTime, "go");
+    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
-function generateTypicalTimes(){
-    let exampleDay = new Map();
-    let goTimes = [8]; 
-    let comeTimes = [17]; 
-
-    for (let i = 0; i < 2; i++) {
-        let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
-        let comeTime = 17 + Math.floor(Math.random() * 4) - 1; 
-        goTimes.push(goTime);
-        comeTimes.push(comeTime);
-    }
-
-    comeTimes.push(23); 
-    goTimes.push(7); 
-
-    goTimes.sort((a, b) => a - b);
-    comeTimes.sort((a, b) => a - b);
-
-    goTimes.forEach(time => exampleDay.set(time, "go"));
-    comeTimes.forEach(time => exampleDay.set(time, "come"));
-
-    return exampleDay;
-}
-
-function generateTypicalDays(){
-    let exampleDays = new Map();
-    for (let day = 1; day <= 10; day++) {
-        if (day % 7 === 6 || day % 7 === 0) { //kolla om de e helg
-            exampleDays.set(day, generateRandomTimes());
-        } else {
-            exampleDays.set(day, generateTypicalTimes());
-        }
+function generateRandomDays(){
+    exampleDays = new Map();
+    for(let day = 1; day <= 10; day++) {
+        exampleDays.set(day, generateRandomTimes);
     }
     return exampleDays;
 }
