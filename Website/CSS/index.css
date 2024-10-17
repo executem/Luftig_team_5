@@ -70,6 +70,7 @@ body {
   border-top: 4px solid black;
   box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px, rgba(0, 0, 0, 0.22) 20px 20px 20px;
   position: relative;
+  bottom:0px;
   width: 100%;
   background: #aaaaaa;
   min-height: 100px;
@@ -78,8 +79,6 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 0vh;
-
 }
 
 .menu {
@@ -123,7 +122,7 @@ body {
   justify-content: center;
   margin-top: 6vw;
   align-items: center;
-  margin-bottom: 10vw;
+  margin-bottom: 10vh;
 }
 
 
@@ -162,4 +161,91 @@ body {
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+.layout{
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  z-index: 1;
+}
+
+
+
+#promptBox{
+position: fixed;
+width: 15rem;
+height: 12rem;
+background-color: gray;
+border-radius: 1rem;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+outline: #1A1A1A solid 2px;
+z-index: 2;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+
+}
+
+#promptBoxText{
+max-height: fit-content;
+max-width: fit-content;
+margin-top: 2rem;
+min-width: 8;
+min-height: 2rem;
+align-self:center;
+}
+
+.buttonContainer{
+max-height: 8rem;
+display:flex;
+flex-direction: row;
+align-content:center ;
+}
+
+
+/* CSS */
+.promptButton {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0.5rem;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.promptButton:disabled {
+  pointer-events: none;
+}
+
+.promptButton:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.promptButton:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
