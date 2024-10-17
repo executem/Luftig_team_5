@@ -249,3 +249,31 @@ align-content:center ;
   box-shadow: none;
   transform: translateY(0);
 }
+
+.info-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-section-item {
+  margin: 2vw;
+}
+
+.white-text {
+  color: white;
+  font-size: 16px;
+  font-family:'Courier New', Courier, monospace;
+
+}
+
+.vertical-line {
+  border-left: 6px solid white;
+  height: 200px;
+}
+
+.horizontal-line {
+  border-top: 20px solid white;
+  height: 100px;
+}
