@@ -1,10 +1,4 @@
 
-//const exampleTimes = ["none", "none", "none", "none", "none", "none", "none", "none", "go", "none", "none", "none", "none", "none", "none", "none", "none", "come"];
-let exampleTimes = new Map();
-//exampleTimes.set("8", "go");
-//exampleTimes.set("17", "come");
-exampleTimes = generateRandomTimes()
-//let exampleTemperature = new Map();
 let exampleTemperature = [20, 19, 20, 22, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 34, 32, 31, 29, 27, 25]
 
 const outputElement = document.getElementById("output");
@@ -17,15 +11,20 @@ window.sharedData = {
     time: []
 }; 
 
-function startOutput(){
-    ourRoom = new Room(20);
-    var i = 0;                 
+var dayIndex = 1;
+var weekQueue = [];
+var exampleWeek = generateTypicalWeek();
 
-    function timeLoop() {     
+
+function startOutput(){
+    var i = 0;
+    ourRoom = new Room(20); 
+    printOutput(ourRoom.getAC(), 0, ourRoom.getTemperature()); 
+    function timeLoop(dayIndex) { 
         let tempPower = 100;
         setTimeout(function() { 
             tempPower = ourRoom.roomAC.getPower();
-            ourRoom.updateAC(i)
+            ourRoom.updateAC(i, exampleWeek.get(dayIndex));
             ourRoom.updateTemp(i);
             if(tempPower != ourRoom.roomAC.getPower()) {
                 printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
@@ -33,12 +32,19 @@ function startOutput(){
 
             i++;                    
             if (i < 24) {           
-                timeLoop();           
+                timeLoop(dayIndex);           
             }                 
         }, 1000)
     }
-    printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
-    timeLoop();                  
+    
+    //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
+    /*for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+        var i = 0;
+        timeLoop(dayIndex);
+    }*/
+    timeLoop(dayIndex);
+    dayIndex %= 7;
+    dayIndex += 1;
 }
 
 class AC{
@@ -47,10 +53,10 @@ class AC{
         this.temperature = _temperature;
     }
 
-    calculateAC(time) {
-        if(exampleTimes.get(time) == "come"){
+    calculateAC(time, dayData) {
+        if(dayData.get(time) == "come"){
             this.power = 100;                } 
-        else if(exampleTimes.get(time) == "go"){
+        else if(dayData.get(time) == "go"){
             this.power = 0;
         }
     }
@@ -95,8 +101,8 @@ class Room{
         }
     }
 
-    updateAC(time){
-        this.roomAC.calculateAC(time);
+    updateAC(time, dayData){
+        this.roomAC.calculateAC(time, dayData);
         window.sharedData.acPower.push(this.roomAC.getPower());
         window.sharedData.roomTemperature.push(this.getTemperature());
         window.sharedData.time.push(time);
@@ -118,19 +124,40 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputAC);
 }
 
-function generateRandomTimes(){
-    exampleDay = new Map();
-    goTime = Math.floor(Math.random() * 22);
+function GenerateRandomDay() {
+    let exampleDay = new Map();
+    let goTime = Math.floor(Math.random() * 22);
     exampleDay.set(goTime, "go");
-    comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
+    let comeTime = Math.floor(Math.random() * (24 - goTime - 1) + goTime + 1);
     exampleDay.set(comeTime, "come");
     return exampleDay;
 }
 
-function generateRandomDays(){
-    exampleDays = new Map();
-    for(let day = 1; day <= 10; day++) {
-        exampleDays.set(day, generateRandomTimes);
+function generateTypicalDay(){
+    let exampleDay = new Map();
+    let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
+    exampleDay.set(goTime, "go");
+    let comeTime = 17 + Math.floor(Math.random() * 4) - 1; 
+    exampleDay.set(comeTime, "come");
+    return exampleDay;
+}
+
+function generateTypicalWeek(){
+    let exampleWeek = new Map();
+    for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+        if (dayIndex % 7 === 6 || dayIndex % 7 === 0) { //kolla om de e helg
+            exampleWeek.set(dayIndex, GenerateRandomDay());
+        } else {
+            exampleWeek.set(dayIndex, generateTypicalDay());
+        }
     }
-    return exampleDays;
+    return exampleWeek;
+}
+
+function generateTypicalMonth(){
+    let exampleMonth = new Map();
+    for (let monthIndex = 1; monthIndex <= 4; monthIndex++) {
+        exampleMonth.set(dayIndex, generateTypicalWeek());
+    }
+    return exampleMonth;
 }

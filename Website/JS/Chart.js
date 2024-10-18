@@ -5,7 +5,9 @@ const month = date.getMonth();
 const day = date.getDate();
 const hour = date.getHours();
 const minute = date.getMinutes();
-var today = date.toISOString().split('T')[0];
+const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+var today = date.toISOString().split('T')[0] + " (" + weekdays[date.getDay()] + ")";
+
 
 
 
