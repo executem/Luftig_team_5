@@ -16,29 +16,31 @@ var exampleWeek = generateTypicalWeek();
 
 
 function startOutput(){
+    var dayIndex;
     ourRoom = new Room(20); 
+    printOutput(ourRoom.getAC(), 0, ourRoom.getTemperature()); 
+    function timeLoop(dayIndex) { 
+        let tempPower = 100;
+        setTimeout(function() { 
+            tempPower = ourRoom.roomAC.getPower();
+            ourRoom.updateAC(i, exampleWeek.get(dayIndex));
+            ourRoom.updateTemp(i);
+            if(tempPower != ourRoom.roomAC.getPower()) {
+                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
+            }
 
-    for (let day = 1; day <= 7; day++) {
-        function timeLoop() { 
-            let i = 0;
-            let tempPower = 100;
-            setTimeout(function() { 
-                tempPower = ourRoom.roomAC.getPower();
-                ourRoom.updateAC(i, exampleWeek.get(day));
-                ourRoom.updateTemp(i);
-                if(tempPower != ourRoom.roomAC.getPower()) {
-                    printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
-                }
-
-                i++;                    
-                if (i < 24) {           
-                    timeLoop();           
-                }                 
-            }, 1000)
-        }
+            i++;                    
+            if (i < 24) {           
+                timeLoop();           
+            }                 
+        }, 1000)
     }
-    printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
-    timeLoop();                  
+    
+    //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
+    for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+        var i = 0;
+        timeLoop(dayIndex);
+    }
 }
 
 class AC{
@@ -47,10 +49,10 @@ class AC{
         this.temperature = _temperature;
     }
 
-    calculateAC(time, day2) {
-        if(day2.get(time) == "come"){
+    calculateAC(time, dayData) {
+        if(dayData.get(time) == "come"){
             this.power = 100;                } 
-        else if(day2.get(time) == "go"){
+        else if(dayData.get(time) == "go"){
             this.power = 0;
         }
     }
@@ -95,8 +97,8 @@ class Room{
         }
     }
 
-    updateAC(time, day1){
-        this.roomAC.calculateAC(time, day1);
+    updateAC(time, dayData){
+        this.roomAC.calculateAC(time, dayData);
         window.sharedData.acPower.push(this.roomAC.getPower());
         window.sharedData.roomTemperature.push(this.getTemperature());
         window.sharedData.time.push(time);
@@ -138,11 +140,11 @@ function generateTypicalTimes(){
 
 function generateTypicalWeek(){
     let exampleWeek = new Map();
-    for (let day = 1; day <= 20; day++) {
-        if (day % 7 === 6 || day % 7 === 0) { //kolla om de e helg
-            exampleWeek.set(day, generateRandomTimes());
+    for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+        if (dayIndex % 7 === 6 || dayIndex % 7 === 0) { //kolla om de e helg
+            exampleWeek.set(dayIndex, generateRandomTimes());
         } else {
-            exampleWeek.set(day, generateTypicalTimes());
+            exampleWeek.set(dayIndex, generateTypicalTimes());
         }
     }
     return exampleWeek;
