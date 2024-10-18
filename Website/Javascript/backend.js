@@ -15,11 +15,12 @@ var dayIndex = 1;
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
 for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-    ACStartingTime = algorithm(weekQueue, dayIndex)
-    ACStartingTimeMap.set(dayIndex, ACStartingTime)
+    ACStartingTime = Math.floor(algorithm(weekQueue, dayIndex));
+    //console.log(ACStartingTime);
+    ACStartingTimeMap.set(dayIndex, ACStartingTime);
 }
 var exampleWeek = generateTypicalWeek();
-
+//var tempRoom = new Room(20);
 
 function startOutput(){
     var i = 0;
@@ -27,12 +28,19 @@ function startOutput(){
     printOutput(ourRoom.getAC(), 0, ourRoom.getTemperature()); 
     function timeLoop(dayIndex) { 
         let tempPower = 100;
+        let tempIsHome = true;
         setTimeout(function() { 
-            tempPower = ourRoom.roomAC.getPower();
-            ourRoom.updateAC(i, exampleWeek.get(dayIndex));
+            tempPower = ourRoom.getAC().getPower(); // change to getters on rows
+            tempIsHome = ourRoom.getAC().getIsHome();
+            //console.log(ACStartingTimeMap.get(dayIndex));
+            ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
             ourRoom.updateTemp(i);
-            if(tempPower != ourRoom.roomAC.getPower()) {
+            if(tempPower != ourRoom.getAC().getPower()) {
                 printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
+            }
+            //outputElement.appendChild(document.createTextNode(ourRoom.getAC().getIsHome()))
+            if(tempIsHome != ourRoom.getAC().getIsHome()) {
+                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature());
             }
 
             i++;                    
@@ -48,9 +56,12 @@ function startOutput(){
         timeLoop(dayIndex);
     }*/
     timeLoop(dayIndex);
+
     dayIndex %= 7;
     dayIndex += 1;
     if (dayIndex = 1){
+        weekQueue.push(exampleWeek);
+        weekQueue.shift();
         exampleWeek = generateTypicalWeek();
     }
 }
@@ -59,14 +70,32 @@ class AC{
     constructor(_power, _temperature){
         this.power = _power;
         this.temperature = _temperature;
+        this.isHome = true;
     }
 
-    calculateAC(time, dayData) {
+    getIsHome() {
+        return this.isHome;
+    }
+
+    setIsHome(isHome) {
+        this.isHome = isHome;
+    }
+
+    calculateAC(time, dayData, ACStartingTime) {
         if(dayData.get(time) == "come"){
-            this.power = 100;                } 
+            this.power = 100;    
+            this.isHome = true;  
+            //outputElement.appendChild("average:" + document.createTextNode(ACStartingTime-1))         
+        }
         else if(dayData.get(time) == "go"){
             this.power = 0;
+            this.isHome = false;
         }
+        else if (time == ACStartingTime - 1){
+            this.power = 100;    
+            //outputElement.appendChild(document.createTextNode("yo"))
+        }
+        
     }
 
     getPower(){
@@ -109,8 +138,8 @@ class Room{
         }
     }
 
-    updateAC(time, dayData){
-        this.roomAC.calculateAC(time, dayData);
+    updateAC(time, dayData, ACStartingTime){
+        this.roomAC.calculateAC(time, dayData, ACStartingTime);
         window.sharedData.acPower.push(this.roomAC.getPower());
         window.sharedData.roomTemperature.push(this.getTemperature());
         window.sharedData.time.push(time);
@@ -180,5 +209,7 @@ function algorithm(listOfWeeks, dayIndex){
             }
         }
     }
-    return sumOfComeTimes / listOfWeeks.length;
+    averageComeTime = sumOfComeTimes / listOfWeeks.length;
+    //console.log(averageComeTime);
+    return averageComeTime;
 }
