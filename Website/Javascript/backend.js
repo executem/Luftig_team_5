@@ -12,7 +12,8 @@ window.sharedData = {
 }; 
 
 var dayIndex = 1;
-var weekQueue = [];
+var weekQueue = generateWeekList(4);
+
 var exampleWeek = generateTypicalWeek();
 
 
@@ -154,10 +155,14 @@ function generateTypicalWeek(){
     return exampleWeek;
 }
 
-function generateTypicalMonth(){
-    let exampleMonth = new Map();
-    for (let monthIndex = 1; monthIndex <= 4; monthIndex++) {
-        exampleMonth.set(dayIndex, generateTypicalWeek());
+function generateWeekList(weekAmount){
+    let weekList = [];
+    for (let monthIndex = 1; monthIndex <= weekAmount; monthIndex++) {
+        weekList.push(generateTypicalWeek());
     }
-    return exampleMonth;
+    return weekList;
+}
+
+function algorithm(){
+
 }
