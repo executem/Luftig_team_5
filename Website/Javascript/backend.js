@@ -124,7 +124,7 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputAC);
 }
 
-function generateRandomTimes() {
+function GenerateRandomDay() {
     let exampleDay = new Map();
     let goTime = Math.floor(Math.random() * 22);
     exampleDay.set(goTime, "go");
@@ -133,7 +133,7 @@ function generateRandomTimes() {
     return exampleDay;
 }
 
-function generateTypicalTimes(){
+function generateTypicalDay(){
     let exampleDay = new Map();
     let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
     exampleDay.set(goTime, "go");
@@ -146,10 +146,18 @@ function generateTypicalWeek(){
     let exampleWeek = new Map();
     for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
         if (dayIndex % 7 === 6 || dayIndex % 7 === 0) { //kolla om de e helg
-            exampleWeek.set(dayIndex, generateRandomTimes());
+            exampleWeek.set(dayIndex, GenerateRandomDay());
         } else {
-            exampleWeek.set(dayIndex, generateTypicalTimes());
+            exampleWeek.set(dayIndex, generateTypicalDay());
         }
     }
     return exampleWeek;
+}
+
+function generateTypicalMonth(){
+    let exampleMonth = new Map();
+    for (let monthIndex = 1; monthIndex <= 4; monthIndex++) {
+        exampleMonth.set(dayIndex, generateTypicalWeek());
+    }
+    return exampleMonth;
 }
