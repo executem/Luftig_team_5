@@ -11,12 +11,13 @@ window.sharedData = {
     time: []
 }; 
 
+var dayIndex = 1;
 var weekQueue = [];
 var exampleWeek = generateTypicalWeek();
 
 
 function startOutput(){
-    var dayIndex;
+    var i = 0;
     ourRoom = new Room(20); 
     printOutput(ourRoom.getAC(), 0, ourRoom.getTemperature()); 
     function timeLoop(dayIndex) { 
@@ -31,16 +32,19 @@ function startOutput(){
 
             i++;                    
             if (i < 24) {           
-                timeLoop();           
+                timeLoop(dayIndex);           
             }                 
         }, 1000)
     }
     
     //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
-    for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+    /*for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
         var i = 0;
         timeLoop(dayIndex);
-    }
+    }*/
+    timeLoop(dayIndex);
+    dayIndex %= 7;
+    dayIndex += 1;
 }
 
 class AC{
