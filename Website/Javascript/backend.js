@@ -13,7 +13,11 @@ window.sharedData = {
 
 var dayIndex = 1;
 var weekQueue = generateWeekList(4);
-
+var ACStartingTimeMap = new Map();
+for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+    ACStartingTime = algorithm(weekQueue, dayIndex)
+    ACStartingTimeMap.set(dayIndex, ACStartingTime)
+}
 var exampleWeek = generateTypicalWeek();
 
 
@@ -46,6 +50,9 @@ function startOutput(){
     timeLoop(dayIndex);
     dayIndex %= 7;
     dayIndex += 1;
+    if (dayIndex = 1){
+        exampleWeek = generateTypicalWeek();
+    }
 }
 
 class AC{
@@ -163,6 +170,15 @@ function generateWeekList(weekAmount){
     return weekList;
 }
 
-function algorithm(){
-
+function algorithm(listOfWeeks, dayIndex){
+    var sumOfComeTimes = 0;
+    for(let i = 0; i < listOfWeeks.length; i++) {
+        dayData = listOfWeeks[i].get(dayIndex)
+        for(let time = 0; time < 24; time++){
+            if(dayData.get(time) == "come"){
+                sumOfComeTimes += time;
+            }
+        }
+    }
+    return sumOfComeTimes / listOfWeeks.length;
 }
