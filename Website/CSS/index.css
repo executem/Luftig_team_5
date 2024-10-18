@@ -282,7 +282,8 @@ align-content:center ;
   position:fixed;
   bottom:10px;
   right:10px;
-  background-color: #04AA6D;
+  background-color: darkorange ;
+  border-radius: 15px;
   border: none;
   color: white;
   padding: 20px;
@@ -290,5 +291,12 @@ align-content:center ;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  color: black;
   margin: 4px 2px;
+  z-index: 1;
+}
+
+.button-contact:hover {
+  background-color: orange;
+  cursor: pointer;
 }
