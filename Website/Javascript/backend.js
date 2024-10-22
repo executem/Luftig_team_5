@@ -140,6 +140,10 @@ class Room{
 
     updateAC(time, dayData, ACStartingTime){
         this.roomAC.calculateAC(time, dayData, ACStartingTime);
+        if(window.sharedData.time.length % 24 == 0){
+            window.sharedData.acPower = [];
+            window.sharedData.roomTemperature = [];
+        }
         window.sharedData.acPower.push(this.roomAC.getPower());
         window.sharedData.roomTemperature.push(this.getTemperature());
         window.sharedData.time.push(time);

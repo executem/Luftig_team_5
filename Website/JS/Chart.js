@@ -1,42 +1,18 @@
 
-const date = new Date();
-const year = date.getFullYear();
-const month = date.getMonth();
-const day = date.getDate();
-const hour = date.getHours();
-const minute = date.getMinutes();
+var date = new Date("2024-10-21");
+var year = date.getFullYear();
+var month = date.getMonth();
+var day = date.getDate();
+var hour = date.getHours();
+var minute = date.getMinutes();
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const hours = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
 var today = date.toISOString().split('T')[0] + " (" + weekdays[date.getDay()] + ")";
-
-
-
-
-
-
-const energyYearData = {
-    labels: [],
-    datasets: [{
-        label: "Energy usage ("+ year +")",
-        data: [],
-        fill: true,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1
-    }]
-};
-
-const tempYearData = {
-    labels: [],
-    datasets: [{
-        label: "Temperature ("+ year +")",
-        data: [],
-        fill: true,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1
-    }]
-};
+var dateUpdated = false;
 
 const energyDayData = {
-    labels: [],
+    labels: hours,
     datasets: [{
         label: "Energy usage ("+ today +")",
         data: [],
@@ -47,7 +23,7 @@ const energyDayData = {
 };
 
 const tempDayData = {
-    labels: [],
+    labels: hours,
     datasets: [{
         label: "Temperature ("+ today +")",
         data: [],
@@ -59,11 +35,8 @@ const tempDayData = {
 
 const ENERGYDAYCHART = document.getElementById("energyDayChart");
 const TEMPDAYCHART = document.getElementById("tempDayChart");
-const ENERGYYEARCHART = document.getElementById("energyYearChart");
-const TEMPYEARCHART = document.getElementById("tempYearChart");
 
 console.log(ENERGYDAYCHART);
-console.log(ENERGYYEARCHART);
 
 
 let energyDayChart = new Chart(ENERGYDAYCHART, {
@@ -84,57 +57,44 @@ let tempDayChart = new Chart(TEMPDAYCHART, {
         }
     }
 });
-let energyYearChart = new Chart(ENERGYYEARCHART, {
-    type: "line",
-    data: energyYearData,
-    options: {
-        legend: {
-            onClick: null
-        }
-    }
-});
-let tempYearChart = new Chart(TEMPYEARCHART, {
-    type: "line",
-    data: tempYearData,
-    options: {
-        legend: {
-            onClick: null
-        }
-    }
-});
 
 function updateEnergyDayChart(){
-    energyDayChart.data.labels = window.sharedData.time;
     energyDayChart.data.datasets[0].data = window.sharedData.acPower;
     energyDayChart.update();
 }
 
 function updateTempDayChart(){
-    tempDayChart.data.labels = window.sharedData.time;
     tempDayChart.data.datasets[0].data = window.sharedData.roomTemperature;
     tempDayChart.update();
 }
 
-function updateEnergyYearChart(){
-    energyYearChart.data.labels = window.sharedData.time;
-    energyYearChart.data.datasets[0].data = window.sharedData.acPower;
-    energyYearChart.update();
-}
-
-function updateTempYearChart(){
-    tempYearChart.data.labels = window.sharedData.time;
-    tempYearChart.data.datasets[0].data = window.sharedData.roomTemperature;
-    tempYearChart.update();
-}
-
 function updateCharts(){
-    setInterval(updateEnergyDayChart, 1000);
-    setInterval(updateEnergyYearChart, 1000);
-    setInterval(updateTempDayChart, 1000);
-    setInterval(updateTempYearChart, 1000);
+    setInterval(() => {
+        if(window.sharedData.time.length % 24 == 0 && window.sharedData.time.length != 0 && !dateUpdated){
+            window.sharedData.acPower = [];
+            window.sharedData.roomTemperature = [];
+            date.setDate(date.getDate() + 1);
+            today = date.toISOString().split('T')[0] + " (" + weekdays[date.getDay()] + ")";
+            resetCharts();
+            dateUpdated = true; 
+        }
+        if(window.sharedData.time.length % 24 != 0) {
+            dateUpdated = false; 
+        }
+        updateEnergyDayChart();
+        updateTempDayChart();
+    }, 1000);
 }
 
 updateCharts();
+
+function resetCharts(){
+    energyDayChart.reset();
+    energyDayChart.data.datasets[0].label = "Energy usage ("+ today +")";
+    tempDayChart.reset();
+    tempDayChart.data.datasets[0].label = "Temperature ("+ today +")";
+}
+
 
 function timeSelect(evt, chartType) {
     var i, chartTab, timeTabButton;
