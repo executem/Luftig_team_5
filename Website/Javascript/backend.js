@@ -1,5 +1,4 @@
-
-let exampleTemperature = [20, 19, 20, 22, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 34, 32, 31, 29, 27, 25]
+let exampleTemperature = [16, 17, 19, 20, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 30, 28, 25, 23, 20, 18]
 
 const outputElement = document.getElementById("output");
 
@@ -15,7 +14,7 @@ var dayIndex = 1;
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
 for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-    ACStartingTime = Math.floor(algorithm(weekQueue, dayIndex));
+    ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
     //console.log(ACStartingTime);
     ACStartingTimeMap.set(dayIndex, ACStartingTime);
 }
@@ -25,7 +24,6 @@ var exampleWeek = generateTypicalWeek();
 function startOutput(){
     var i = 0;
     ourRoom = new Room(20); 
-    printOutput(ourRoom.getAC(), 0, ourRoom.getTemperature()); 
     function timeLoop(dayIndex) { 
         let tempPower = 100;
         let tempIsHome = true;
@@ -35,19 +33,12 @@ function startOutput(){
             //console.log(ACStartingTimeMap.get(dayIndex));
             ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
             ourRoom.updateTemp(i);
-            if(tempPower != ourRoom.getAC().getPower()) {
-                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature()); 
-            }
-            //outputElement.appendChild(document.createTextNode(ourRoom.getAC().getIsHome()))
-            if(tempIsHome != ourRoom.getAC().getIsHome()) {
-                printOutput(ourRoom.getAC(), i, ourRoom.getTemperature());
-            }
 
             i++;                    
             if (i < 24) {           
                 timeLoop(dayIndex);           
             }                 
-        }, 1000)
+        }, 1)
     }
     
     //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
@@ -71,6 +62,7 @@ class AC{
         this.power = _power;
         this.temperature = _temperature;
         this.isHome = true;
+        this.startAdv = false;
     }
 
     getIsHome() {
@@ -81,21 +73,49 @@ class AC{
         this.isHome = isHome;
     }
 
-    calculateAC(time, dayData, ACStartingTime) {
-        if(dayData.get(time) == "come"){
-            this.power = 100;    
-            this.isHome = true;  
-            //outputElement.appendChild("average:" + document.createTextNode(ACStartingTime-1))         
-        }
-        else if(dayData.get(time) == "go"){
-            this.power = 0;
+    calculateAC(time, dayData, ACStartingTime, curTemp) {
+        if(dayData.get(time) == "go"){
             this.isHome = false;
+            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off - "));
+
         }
-        else if (time == ACStartingTime - 1){
+        else if(dayData.get(time) == "come"){
+            this.isHome = true;  
+            outputElement.appendChild(document.createTextNode("Person comes home  - "));
+        }
+        else if (time == ACStartingTime - 1 && !this.isHome){
+            this.startAdv = true;
             this.power = 100;    
-            //outputElement.appendChild(document.createTextNode("yo"))
+            outputElement.appendChild(document.createTextNode("AC starts in advance - "));
         }
-        
+        else if(!this.isHome && time == ACStartingTime + 2) {
+            this.power = 0;
+            outputElement.appendChild(document.createTextNode("Person has not come home in 2 hours, AC turns off - "));
+        }
+
+        if(this.isHome){
+            if(curTemp > this.temperature){
+                this.power = 100;
+            }
+            else if(curTemp == this.temperature){
+                if(curTemp > exampleTemperature[time]){
+                    this.power = 0;
+                }
+                else{
+                    this.power = Math.min(Math.floor((100*(((exampleTemperature[time] - curTemp)*0.25)/((curTemp - 16)*0.5)))*10)/10, 100)
+                }
+            }
+            else{
+                this.power = 0;
+            }
+        }
+        else{
+            if(!this.startAdv){
+                this.power = 0;
+            }
+        }    
+        printOutput(this, time, curTemp);
+
     }
 
     getPower(){
@@ -124,8 +144,8 @@ class Room{
 
     updateTemp(time){
         let desiredTemp = this.roomAC.getTemp();
-        if(this.temperature - desiredTemp > 0 && this.roomAC.getPower() != 0){
-            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 18)*0.5)*10)/10;
+        if(this.temperature - desiredTemp >= 0 && this.roomAC.getPower() > 0){
+            this.temperature = Math.floor((this.temperature - (this.roomAC.getPower()/100)*(this.temperature - 16)*0.5)*10)/10;
             if(this.temperature < desiredTemp){
                 this.temperature = desiredTemp;
             }
@@ -139,7 +159,7 @@ class Room{
     }
 
     updateAC(time, dayData, ACStartingTime){
-        this.roomAC.calculateAC(time, dayData, ACStartingTime);
+        this.roomAC.calculateAC(time, dayData, ACStartingTime, this.temperature);
         if(window.sharedData.time.length % 24 == 0){
             window.sharedData.acPower = [];
             window.sharedData.roomTemperature = [];
@@ -159,10 +179,12 @@ class Room{
 function printOutput(ourAC, time, temperature){
     outputElement.appendChild(document.createTextNode("Current time: " + time + ":00 - "));
     const outputTime = document.createTextNode("Current temp: " + temperature + " - ");
-    const outputAC = document.createTextNode("AC is currently at " + ourAC.getPower() + "\n");
+    const outputAC = document.createTextNode("AC is currently at " + ourAC.getPower() + " - ");
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
+    outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
+
 }
 
 function GenerateRandomDay() {
@@ -203,7 +225,7 @@ function generateWeekList(weekAmount){
     return weekList;
 }
 
-function algorithm(listOfWeeks, dayIndex){
+function calculateAverage(listOfWeeks, dayIndex){
     var sumOfComeTimes = 0;
     for(let i = 0; i < listOfWeeks.length; i++) {
         dayData = listOfWeeks[i].get(dayIndex)
