@@ -76,21 +76,21 @@ class AC{
     calculateAC(time, dayData, ACStartingTime, curTemp) {
         if(dayData.get(time) == "go"){
             this.isHome = false;
-            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off - "));
+            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off | "));
 
         }
         else if(dayData.get(time) == "come"){
             this.isHome = true;  
-            outputElement.appendChild(document.createTextNode("Person comes home  - "));
+            outputElement.appendChild(document.createTextNode("Person comes home | "));
         }
         else if (time == ACStartingTime - 1 && !this.isHome){
             this.startAdv = true;
             this.power = 100;    
-            outputElement.appendChild(document.createTextNode("AC starts in advance - "));
+            outputElement.appendChild(document.createTextNode("AC starts in advance | "));
         }
         else if(!this.isHome && time == ACStartingTime + 2) {
             this.power = 0;
-            outputElement.appendChild(document.createTextNode("Person has not come home in 2 hours, AC turns off - "));
+            outputElement.appendChild(document.createTextNode("Person has not come home in 2 hours, AC turns off | "));
         }
 
         if(this.isHome){
@@ -177,13 +177,15 @@ class Room{
 
 
 function printOutput(ourAC, time, temperature){
-    outputElement.appendChild(document.createTextNode("Current time: " + time + ":00 - "));
-    const outputTime = document.createTextNode("Current temp: " + temperature + " - ");
-    const outputAC = document.createTextNode("AC is currently at " + ourAC.getPower() + " - ");
+    outputElement.appendChild(document.createTextNode("Current time: " + time + ":00 | "));
+    const outputTime = document.createTextNode("Current temp: " + temperature + " | ");
+    const outputAC = document.createTextNode("AC is currently at " + ourAC.getPower() + " | ");
 
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
     outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
+    outputElement.appendChild(document.createTextNode("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"));
+
 
 }
 
