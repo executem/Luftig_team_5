@@ -14,11 +14,8 @@ function toggleVisibility(ev){
 
 }
 function toggleVisibility(){
-  if(box.style.visibility == "hidden"){
-    box.style.visibility="visible";
-  } else{
-    box.style.visibility = "hidden"
-  }
+  box.style.visibility = 'visible';
+
 }
 
 const textBox = document.getElementById("promptBoxText");
