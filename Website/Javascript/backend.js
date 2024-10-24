@@ -184,7 +184,7 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
     outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
-    outputElement.appendChild(document.createTextNode("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"));
+    outputElement.innerHTML += "<hr>";
 
 
 }
