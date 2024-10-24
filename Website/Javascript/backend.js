@@ -8,9 +8,10 @@ window.sharedData = {
     acPower: [],
     roomTemperature: [],
     time: [],
-    text: []
-    
+    text: [],
+    newDate: false
 }; 
+
 var promptUpdateFunction = null;
 //Imports function into this class
 function initPromptBox(promptFunc){
@@ -20,11 +21,6 @@ promptUpdateFunction = promptFunc;
 function updatePromptBox(text){
 promptUpdateFunction(text);
 }
-
-
-    time: [],
-    newDate: false
-}; 
 
 var dayIndex = 1;
 var weekQueue = generateWeekList(4);
