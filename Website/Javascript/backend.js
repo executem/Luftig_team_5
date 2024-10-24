@@ -12,9 +12,11 @@ window.sharedData = {
     
 }; 
 var promptUpdateFunction = null;
+//Imports function into this class
 function initPromptBox(promptFunc){
 promptUpdateFunction = promptFunc; 
 }
+// Call to update prompt box
 function updatePromptBox(text){
 promptUpdateFunction(text);
 }
@@ -209,6 +211,10 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
     outputElement.innerHTML += "<hr>";
 }
+/*Functions that are called when accept or decline is pressed in the prompt box,
+They can not contain any values and must be updated to contain reference to the correct function to give 
+the correct behaviour.
+*/
 var acceptFunction = doNothing;
 var declineFunction = doNothing;
 function doNothing(){};
