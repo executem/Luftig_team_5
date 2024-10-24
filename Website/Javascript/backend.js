@@ -61,7 +61,7 @@ function startOutput(){
             if (i < 24) {           
                 timeLoop(dayIndex);           
             }                 
-        }, 1)
+        }, 1000)
     }
     
     //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
