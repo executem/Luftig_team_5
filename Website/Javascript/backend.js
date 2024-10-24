@@ -65,7 +65,7 @@ function startOutput(){
             if (i < 24) {           
                 timeLoop(dayIndex);           
             }                 
-        }, 1)
+        }, 500)
     }
     
     timeLoop(dayIndex);
