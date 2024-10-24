@@ -7,8 +7,20 @@ const outputElement = document.getElementById("output");
 window.sharedData = {
     acPower: [],
     roomTemperature: [],
-    time: []
+    time: [],
+    text: []
+    
 }; 
+var promptUpdateFunction = null;
+//Imports function into this class
+function initPromptBox(promptFunc){
+promptUpdateFunction = promptFunc; 
+}
+// Call to update prompt box
+function updatePromptBox(text){
+promptUpdateFunction(text);
+}
+
 
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
@@ -24,6 +36,19 @@ for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
 
 var exampleWeek = generateTypicalWeek();
 var dayIndex = 1;
+    function timeLoop() {     
+      setTimeout(function() { 
+            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
+            ourRoom.updateAC(i)
+            ourRoom.updateTemp();
+            printOutput(ourRoom.getAC(), i); 
+        i++;                    
+        if (i < 24) {           
+          timeLoop();   
+                 
+        }                       
+      }, 1000)
+    }
 function startOutput(){
     outputElement.innerHTML='\n';
     if(ACStartingTimeMap.get(dayIndex) == -1){
@@ -198,8 +223,22 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputAC);
     outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
     outputElement.innerHTML += "<hr>";
-
-
+}
+/*Functions that are called when accept or decline is pressed in the prompt box,
+They can not contain any values and must be updated to contain reference to the correct function to give 
+the correct behaviour.
+*/
+var acceptFunction = doNothing;
+var declineFunction = doNothing;
+function doNothing(){};
+function promptCallback(bool){
+    if(bool){
+        outputElement.appendChild(document.createTextNode("Changes accepted!"));
+        acceptFunction();
+    } else{
+        outputElement.appendChild(document.createTextNode("Changes declined!"));
+        declineFunction();
+    }
 }
 
 function GenerateRandomDay() {
