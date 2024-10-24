@@ -11,6 +11,14 @@
         <a href="ProjectPage.html">Project</a>
         <p class="CourseTitle"> TEK830 Digitalization and AI in practice</p>
       </div> 
+      <div id="promptBox">
+        <div id="promptBoxText" ></div>
+        <div class="buttonContainer">
+            <button onclick="acceptChanges(callback)" class="promptButton">Accept</button> 
+            <button onclick="declineChanges(callback)" class="promptButton">Decline</button>
+        </div>
+            
+      </div>
     <div class="PageView">
         <div class="startSimOutput">
             <button class="startSimulation" onclick="startOutput()">
@@ -72,11 +80,10 @@
         function startOutput(){
             document.getElementById("outputText").innerHTML = outputText;
         }
-        /*
+
         function callback(bool){
             promptCallback(bool);
         }
-        */
 
     </script>
 

@@ -109,7 +109,7 @@ function printOutput(ourAC, time){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
 }
-/*function promptCallback(bool){
+function promptCallback(bool){
     if(bool){
         outputElement.appendChild(document.createTextNode("Callback true"));
     } else{
@@ -117,7 +117,7 @@ function printOutput(ourAC, time){
     }
 
     
-}*/
+}
 function generateRandomTimes(){
     let exampleDay = new Map();
     let goTime = Math.floor(Math.random() * 22);
