@@ -8,7 +8,8 @@ export default [
   pluginJs.configs.recommended,
   {
     rules: {
-      "no-unused-vars": "off"
+      "no-unused-vars": "off",
+      "source-type":"module"
     }
   }
 ];

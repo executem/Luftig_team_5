@@ -1,4 +1,4 @@
-let exampleTemperature = [16, 17, 19, 20, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 30, 28, 25, 23, 20, 18]
+let exampleTemperature = [16, 17, 19, 20, 23, 25, 25, 27, 27, 28, 28, 28, 28, 28, 28, 27, 28, 28, 27, 27, 25, 23, 20, 18]
 
 const outputElement = document.getElementById("output");
 var newDay = false;
@@ -8,21 +8,57 @@ window.sharedData = {
     acPower: [],
     roomTemperature: [],
     time: [],
+    text: []
+    
+}; 
+var promptUpdateFunction = null;
+//Imports function into this class
+function initPromptBox(promptFunc){
+promptUpdateFunction = promptFunc; 
+}
+// Call to update prompt box
+function updatePromptBox(text){
+promptUpdateFunction(text);
+}
+
+
+    time: [],
     newDate: false
 }; 
 
 var dayIndex = 1;
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
+
 for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-    ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
-    //console.log(ACStartingTime);
+    var ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
+    let uD = unpredictableDay(weekQueue, dayIndex, ACStartingTime);
+    if(uD){
+        ACStartingTime = -1;
+    }
     ACStartingTimeMap.set(dayIndex, ACStartingTime);
 }
-var exampleWeek = generateTypicalWeek();
-//var tempRoom = new Room(20);
 
+var exampleWeek = generateTypicalWeek();
+var dayIndex = 1;
+    function timeLoop() {     
+      setTimeout(function() { 
+            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
+            ourRoom.updateAC(i)
+            ourRoom.updateTemp();
+            printOutput(ourRoom.getAC(), i); 
+        i++;                    
+        if (i < 24) {           
+          timeLoop();   
+                 
+        }                       
+      }, 1000)
+    }
 function startOutput(){
+    outputElement.innerHTML='\n';
+    if(ACStartingTimeMap.get(dayIndex) == -1){
+        outputElement.appendChild(document.createTextNode("The program has recognized this day as unpredictable\n\n"));
+    }
     var i = 0;
     window.sharedData.newDate = true;
     ourRoom = new Room(20); 
@@ -49,19 +85,22 @@ function startOutput(){
         }, 100)
     }
     
-    //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
-    /*for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-        var i = 0;
-        timeLoop(dayIndex);
-    }*/
     timeLoop(dayIndex);
 
     dayIndex %= 7;
     dayIndex += 1;
-    if (dayIndex = 1){
+    if (dayIndex == 1){
         weekQueue.push(exampleWeek);
         weekQueue.shift();
         exampleWeek = generateTypicalWeek();
+        for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+            var ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
+            let uD = unpredictableDay(weekQueue, dayIndex, ACStartingTime)
+            if(uD){
+                ACStartingTime = -1;
+            }
+            ACStartingTimeMap.set(dayIndex, ACStartingTime);
+        }
     }
 }
 
@@ -91,12 +130,16 @@ class AC{
             this.isHome = true;  
             outputElement.appendChild(document.createTextNode("Person comes home | "));
         }
-        else if (time == ACStartingTime - 1 && !this.isHome){
+        else if(ACStartingTime == -1)
+        {
+            //pass;
+        }
+        else if (time == ACStartingTime - 2 && !this.isHome){
             this.startAdv = true;
             this.power = 100;    
             outputElement.appendChild(document.createTextNode("AC starts in advance | "));
         }
-        else if(!this.isHome && time == ACStartingTime + 2) {
+        else if(!this.isHome && time == ACStartingTime + 1) {
             this.power = 0;
             outputElement.appendChild(document.createTextNode("Person has not come home in 2 hours, AC turns off | "));
         }
@@ -192,9 +235,23 @@ function printOutput(ourAC, time, temperature){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
     outputElement.appendChild(document.createTextNode("Outside temperature: " + exampleTemperature[time] + "\n"));
-    outputElement.appendChild(document.createTextNode("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"));
-
-
+    outputElement.innerHTML += "<hr>";
+}
+/*Functions that are called when accept or decline is pressed in the prompt box,
+They can not contain any values and must be updated to contain reference to the correct function to give 
+the correct behaviour.
+*/
+var acceptFunction = doNothing;
+var declineFunction = doNothing;
+function doNothing(){};
+function promptCallback(bool){
+    if(bool){
+        outputElement.appendChild(document.createTextNode("Changes accepted!"));
+        acceptFunction();
+    } else{
+        outputElement.appendChild(document.createTextNode("Changes declined!"));
+        declineFunction();
+    }
 }
 
 function GenerateRandomDay() {
@@ -208,9 +265,9 @@ function GenerateRandomDay() {
 
 function generateTypicalDay(){
     let exampleDay = new Map();
-    let goTime = 8 + Math.floor(Math.random() * 3) - 1; 
+    let goTime = 7 + Math.floor(Math.random() * 2); 
     exampleDay.set(goTime, "go");
-    let comeTime = 17 + Math.floor(Math.random() * 4) - 1; 
+    let comeTime = 16 + Math.floor(Math.random() * 2); 
     exampleDay.set(comeTime, "come");
     return exampleDay;
 }
@@ -218,7 +275,7 @@ function generateTypicalDay(){
 function generateTypicalWeek(){
     let exampleWeek = new Map();
     for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-        if (dayIndex % 7 === 6 || dayIndex % 7 === 0) { //kolla om de e helg
+        if (dayIndex % 7 === 6 || dayIndex % 7 === 0) { //Check if weekend
             exampleWeek.set(dayIndex, GenerateRandomDay());
         } else {
             exampleWeek.set(dayIndex, generateTypicalDay());
@@ -246,6 +303,24 @@ function calculateAverage(listOfWeeks, dayIndex){
         }
     }
     averageComeTime = sumOfComeTimes / listOfWeeks.length;
-    //console.log(averageComeTime);
+
     return averageComeTime;
+}
+
+function unpredictableDay(listOfWeeks, dayIndex, averageComeTime) {
+    differenceSum = 0;
+    for(let i = 0; i < listOfWeeks.length; i++) {
+        dayData = listOfWeeks[i].get(dayIndex)
+        for(let time = 0; time < 24; time++){
+            if(dayData.get(time) == "come"){
+                differenceSum += Math.abs(time - averageComeTime);
+            }
+        }
+    }
+    if(differenceSum > 4){
+        return true;
+    }
+    else{
+        return false;
+    }
 }

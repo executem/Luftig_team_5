@@ -13,12 +13,23 @@ function toggleVisibility(ev){
   
 
 }
-
-const textBox = document.getElementById("promptBoxText");
-function updateText(newText){
-  textBox.textContent = newText;
+function toggleVisibility(){
+  if(box.style.visibility == "hidden"){
+    box.style.visibility="visible";
+  } else{
+    box.style.visibility = "hidden"
+  }
 }
 
+const textBox = document.getElementById("promptBoxText");
+
+function updateText(text){
+  textBox.textContent = text;
+}
+function updateBox(text){
+  toggleVisibility()
+  updateText(text);
+}
 
 // SEND IN ACCEPT CALLBACKFUNCTION
 function acceptChanges(callBack){

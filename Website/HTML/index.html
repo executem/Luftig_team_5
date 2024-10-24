@@ -1,6 +1,10 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="../CSS/index.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/DiscussionPage.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/AboutPage.css">
+
+
 
         <!-- Include JQuery --> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
@@ -11,8 +15,6 @@
             <img src="../Assets/chalmers.png" width="260" height="80">
             <a href="index.html">Home</a>
             <a href="ProjectPage.html">Project</a>
-            <a href="DiscussionPage.html">Discussion</a>
-            <a href="AboutPage.html">About</a>
             <p class="CourseTitle"> TEK830 Digitalization and AI in practice</p>
           </div> 
     
@@ -25,14 +27,133 @@
         </div>
 
     </div>
+
+    <div class="info-section">
+        <img class="ac_front_image info-section-item" style="filter: invert(1);" src="../Assets/chalmers2.png" width="300" height="300">
+        <div class="vertical-line info-section-item"></div> 
+        <p class="white-text info-section-item"> This site is a part of the Capstone X IKEA project <br> of group 8 in the Chalmers University course, <br> Digitalization and AI in practice (TEK830). <br>
+            The "Luftig" project is a software prototype designed <br> to be used inside of Air Conditioners with the purpose <br> of minimizing energy consumption and in turn <br>
+            decrease utility costs for US households. 
+        </p>
+
+    </div>
+
+    
+
+    <body>
+
+        
+
+          <div>
+            <h1 class="Title"> How the project upholds the three design thinking principles. </h1>
+          </div>
+
+
+          <div class="InfoCardContainer">
+
+          <div class="InfoCard"> 
+            <h4 class="cardTitle"> Desirability </h4>
+            <p class="cardText"> The product focuses on reducing utility costs in US homes by reducing the electricity consumption of air conditioning. With air conditioners already being present in about 90% of US households however still, about 27% of US households struggling to pay their bills. We firmly believe that this product will be appreciated by most potential customers. Because who doesn't like paying less money for the same thing. </p>     </div>
+
+          <div class="InfoCard"> 
+            <h4 class="cardTitle"> Feasability </h4>
+            <p class="cardText"> The product is not too much different compared to common air conditioners across the market. With the exception of smart firmware linked to the IKEA smart home app which allows the special features. The project would obviously require a product design and mechanical engineering to deploy an actual product. However most technology found in this project is already existent. </p>
+          </div>
+
+          <div class="InfoCard"> 
+            <h4 class="cardTitle"> Viability </h4>
+            <p class="cardText"> The product follows IKEAs current business model by focusing on reducing energy consumption and thus in turn reducing prices in the long run for the common household owners. The act of reducing energy consumption also follows IKEAs sustainability goals by reducing the AC:s impact on the climate and also helping the customers to reduce their monthly electricity bill. </p>
+          </div>
+
+        </div>
+
+        <div class="horizontal-line info-section-item"></div> 
+
+
+        
+    </body>
+
+
+    <body>
+
+          <div>
+            <h1 class="TeamTitle"> The team behind the project. </h1>
+        </div>
+
+
+          <div class="FrameHolder">
+
+
+            <div class="PersonFrame">
+                <img src="../Assets/fox.jpg">
+                <p> Isac Snecker </p>
+                <a href="mailto:snecker@chalmers.se">snecker@chalmers.se</a>
+
+            </div>
+
+            <div class="PersonFrame">
+                <img src="../Assets/howl.jpg">
+                <p> Jonatan Cederberg </p>
+                <a href="mailto:jonatan.cederberg@gmail.com">jonatan.cederberg@gmail.com</a>
+
+            </div>
+
+            <div class="PersonFrame">
+                <img src="../Assets/exec.jpg">
+                <p> Isak Söderlind </p>
+                <a href="mailto:isak.o.soderlind@gmail.com">isak.o.soderlind@gmail.com</a>
+
+            </div>
+
+            <div class="PersonFrame">
+                <img src="../Assets/skylt.jpg">
+                <p> Jakob Schüldt </p>
+                <a href="mailto:jakobschyldt@gmail.com">jakobschyldt@gmail.com</a>
+
+            </div>
+
+            <div class="PersonFrame">
+                <img src="../Assets/huffla.jpg">
+                <p> Isac Jason </p>
+                <a href="mailto:Isac.jason@gmail.com">Isac.jason@gmail.com</a>
+
+            </div>
+
+            <div class="PersonFrame">
+                <img src="../Assets/rango.jpg">
+                <p> Emil Svensjö </p>
+                <a href="mailto:ema.svensjo@gmail.com">ema.svensjo@gmail.com</a>
+
+            </div>
+
+
+        </div>
+
+        <button class="button-contact" onclick="togglePopup()">Contact us</button>
+
+
+      <script>
+          function togglePopup() {
+              window.open('mailto:snecker@chalmers.se, ema.svensjo@gmail.com, Isac.jason@gmail.com, jakobschyldt@gmail.com, isak.o.soderlind@gmail.com, jonatan.cederberg@gmail.com, ?subject=IKEA x Capstone Group 8 Contact Form');
+              //const overlay = document.getElementById('popupOverlay');
+              //overlay.classList.toggle('show');
+          }
+      </script>
+
+        
         <footer class="footer">
         <ul class="menu">
             <li class="menu__item"><a class="menu__link" href="index.html">Home</a></li>
             <li class="menu__item"><a class="menu__link" href="ProjectPage.html">Project</a></li>
-            <li class="menu__item"><a class="menu__link" href="DiscussionPage.html">Discussion</a></li>
-            <li class="menu__item"><a class="menu__link" href="AboutPage.html">Contact</a></li>
+            <li class="menu__item"><a class="menu__link" href="sources.html">Sources</a></li>
+
         </ul>
         </footer>
+
+
+
+
+    
 
     </body>
 </html>

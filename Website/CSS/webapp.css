@@ -1,5 +1,5 @@
 .PageView{
-    background-color: aqua;
+    background-color: #333;
     width: 99vw;
     height: 88vh;
     display: flex;
@@ -13,51 +13,75 @@
     margin: auto;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 
 }
 
 .startSimulation{
-    width: 95%;
+    width: 98%;
     height: 15%;
     background-color: green;
     margin: auto;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: green;
 
 }
 
+.startSimulation:hover{
+    background-color: rgb(51, 189, 51);
+    transition-duration: 125ms;
+}
+
+.startSimulation:active{
+    background-color: black;
+}
+
+#infoText{
+    font-size: 1rem;
+    color: white;
+    height: 2%;
+    width: 98%;
+    margin-left: 1%;
+}
+
 #output{
-    width: 95%;
-    height: 80%;
+    width: 98%;
+    height: 78%;
     background-color: azure;
     margin: auto;
     white-space: pre-line;
     overflow: scroll;
+    border-radius: 2px;
 
 }
 
 .phoneSim{
-    width: 30%;
+    width: 25%;
     height: 90%;
-    background-color: brown;
+    background-color: black;
     margin: auto;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 }
 
 .acStatus{
-    width: 80%;
+    width: 90%;
     height: 30%;
-    background-color: blue;
+    background-color: black;
     margin: auto;
 }
 
 .appModule{
-    width: 80%;
+    width: 95%;
     height: 65%;
-    background-color: yellow;
+    background-color: azure;
     margin: auto;
     display: flex;
     flex-direction: column;
     overflow: scroll;
+    border-radius: 5px;
 }
 
 .timeTab {
@@ -95,6 +119,11 @@
 .dataChart {
     width: 100%;
     height: 50%;
+}
+
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 

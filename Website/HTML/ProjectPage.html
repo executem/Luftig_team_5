@@ -9,8 +9,6 @@
         <img src="../Assets/chalmers.png" width="260" height="80">
         <a href="index.html">Home</a>
         <a href="ProjectPage.html">Project</a>
-        <a href="DiscussionPage.html">Discussion</a>
-        <a href="AboutPage.html">About</a>
         <p class="CourseTitle"> TEK830 Digitalization and AI in practice</p>
       </div> 
       <div id="promptBox">
@@ -26,6 +24,7 @@
             <button class="startSimulation" onclick="startOutput()">
                 Start Simulation
             </button>
+            <p id="infoText">This output window will show whats going on in the simulation</p>
             <div id="output">
                 <p id="outputText"></p>
             </div>
@@ -59,9 +58,17 @@
 </div>
 
     <script>
+
+        //render chart on pageload
+        window.onload = function(){
+        document.getElementById("defaultOpen").click(); 
+        initPromptBox(updateBox);
+        };
+
         function startOutput(){
             document.getElementById("outputText").innerHTML = outputText;
         }
+        
 
         function callback(bool){
             promptCallback(bool);
