@@ -71,19 +71,19 @@ function updateTempDayChart(){
 function updateCharts(){
     setInterval(() => {
         if(window.sharedData.time.length % 24 == 0 && window.sharedData.time.length != 0 && !dateUpdated){
+            dateUpdated = true; 
+        }
+        if(window.sharedData.time.length % 24 == 1 && dateUpdated) {
             window.sharedData.acPower = [];
             window.sharedData.roomTemperature = [];
             date.setDate(date.getDate() + 1);
             today = date.toISOString().split('T')[0] + " (" + weekdays[date.getDay()] + ")";
             resetCharts();
-            dateUpdated = true; 
-        }
-        if(window.sharedData.time.length % 24 != 0) {
             dateUpdated = false; 
         }
         updateEnergyDayChart();
         updateTempDayChart();
-    }, 1000);
+    }, 100);
 }
 
 updateCharts();
@@ -91,8 +91,11 @@ updateCharts();
 function resetCharts(){
     energyDayChart.reset();
     energyDayChart.data.datasets[0].label = "Energy usage ("+ today +")";
+    energyDayChart.update(); 
+
     tempDayChart.reset();
     tempDayChart.data.datasets[0].label = "Temperature ("+ today +")";
+    tempDayChart.update(); 
 }
 
 
@@ -112,21 +115,3 @@ function timeSelect(evt, chartType) {
     document.getElementById(chartType).style.display = "block";
     evt.currentTarget.className += " active";
 }
-
-/*function openChart(evt, chartType) {
-    var i, dataChart, dataSwitchButton;
-
-    dataChart = document.getElementsByClassName("dataChart");
-    for (i = 0; i < dataChart.length; i++) {
-        dataChart[i].style.display = "none";
-    }
-
-    dataSwitchButton = document.getElementsByClassName("dataSwitchButton");
-    for (i = 0; i < dataSwitchButton.length; i++) {
-        dataSwitchButton[i].className = dataSwitchButton[i].className.replace(" active", "");
-    }
-
-    document.getElementById(chartType).style.display = "block";
-    evt.currentTarget.className += " active";
-}*/
-

@@ -1,13 +1,14 @@
 let exampleTemperature = [16, 17, 19, 20, 23, 25, 25, 27, 28, 29, 30, 31, 32, 34, 36, 35, 35, 34, 30, 28, 25, 23, 20, 18]
 
 const outputElement = document.getElementById("output");
-
+var newDay = false;
 
 //create abject reachable from chart.js
 window.sharedData = {
     acPower: [],
     roomTemperature: [],
-    time: []
+    time: [],
+    newDate: false
 }; 
 
 var dayIndex = 1;
@@ -23,22 +24,29 @@ var exampleWeek = generateTypicalWeek();
 
 function startOutput(){
     var i = 0;
+    window.sharedData.newDate = true;
     ourRoom = new Room(20); 
+    newDay = false;
     function timeLoop(dayIndex) { 
         let tempPower = 100;
         let tempIsHome = true;
         setTimeout(function() { 
-            tempPower = ourRoom.getAC().getPower(); // change to getters on rows
-            tempIsHome = ourRoom.getAC().getIsHome();
-            //console.log(ACStartingTimeMap.get(dayIndex));
-            ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
-            ourRoom.updateTemp(i);
+            if(i == 24){
+                newDay = true;
+            }
+            if(newDay == false){
+                tempPower = ourRoom.getAC().getPower(); // change to getters on rows
+                tempIsHome = ourRoom.getAC().getIsHome();
+                //console.log(ACStartingTimeMap.get(dayIndex));
+                ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
+                ourRoom.updateTemp(i);
+                }
 
             i++;                    
             if (i < 24) {           
                 timeLoop(dayIndex);           
             }                 
-        }, 1)
+        }, 100)
     }
     
     //printOutput(ourRoom.getAC(), day, ourRoom.getTemperature()); 
