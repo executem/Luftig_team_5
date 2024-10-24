@@ -75,11 +75,14 @@
 
         //render chart on pageload
         window.onload = function(){
-        document.getElementById("defaultOpen").click(); };
+        document.getElementById("defaultOpen").click(); 
+        initPromptBox(updateBox);
+        };
 
         function startOutput(){
             document.getElementById("outputText").innerHTML = outputText;
         }
+        
 
         function callback(bool){
             promptCallback(bool);

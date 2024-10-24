@@ -11,8 +11,18 @@ const outputElement = document.getElementById("output");
 window.sharedData = {
     acPower: [],
     roomTemperature: [],
-    time: []
+    time: [],
+    text: []
+    
 }; 
+var promptUpdateFunction = null;
+function initPromptBox(promptFunc){
+promptUpdateFunction = promptFunc; 
+}
+function updatePromptBox(text){
+promptUpdateFunction(text);
+}
+
 
 function startOutput(){
     let ourRoom = new Room(28);
@@ -26,7 +36,8 @@ function startOutput(){
             printOutput(ourRoom.getAC(), i); 
         i++;                    
         if (i < 24) {           
-          timeLoop();           
+          timeLoop();   
+                 
         }                       
       }, 1000)
     }
@@ -109,11 +120,16 @@ function printOutput(ourAC, time){
     outputElement.appendChild(outputTime);
     outputElement.appendChild(outputAC);
 }
+var acceptFunction = doNothing;
+var declineFunction = doNothing;
+function doNothing(){};
 function promptCallback(bool){
     if(bool){
-        outputElement.appendChild(document.createTextNode("Callback true"));
+        outputElement.appendChild(document.createTextNode("Changes accepted!"));
+        acceptFunction();
     } else{
-        outputElement.appendChild(document.createTextNode("Callback false"));
+        outputElement.appendChild(document.createTextNode("Changes declined!"));
+        declineFunction();
     }
 
     
