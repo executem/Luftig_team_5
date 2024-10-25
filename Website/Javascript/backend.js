@@ -75,7 +75,6 @@ function startOutput(){
                 timeLoop(dayIndex);           
             }                 
         }, 100)
-        }, 500)
     }
     
     timeLoop(dayIndex);
