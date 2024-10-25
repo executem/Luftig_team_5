@@ -8,7 +8,6 @@ window.sharedData = {
     acPower: [],
     roomTemperature: [],
     time: [],
-    text: [],
     newDate: false
 }; 
 
@@ -17,10 +16,8 @@ var promptUpdateFunction = null;
 function initPromptBox(promptFunc){
 promptUpdateFunction = promptFunc; 
 }
-// Call to update prompt box
-function updatePromptBox(text){
-promptUpdateFunction(text);
-}
+
+
 
 var dayIndex = 1;
 var weekQueue = generateWeekList(4);
@@ -44,9 +41,8 @@ var dayIndex = 1;
             ourRoom.updateTemp();
             printOutput(ourRoom.getAC(), i); 
         i++;                    
-        if (i < 24) {           
+        if (i < 24) {       
           timeLoop();   
-                 
         }                       
       }, 1000)
     }
@@ -79,6 +75,7 @@ function startOutput(){
                 timeLoop(dayIndex);           
             }                 
         }, 100)
+        }, 500)
     }
     
     timeLoop(dayIndex);
@@ -119,8 +116,7 @@ class AC{
     calculateAC(time, dayData, ACStartingTime, curTemp) {
         if(dayData.get(time) == "go"){
             this.isHome = false;
-            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off | "));
-
+            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off | "));        
         }
         else if(dayData.get(time) == "come"){
             this.isHome = true;  
@@ -128,7 +124,7 @@ class AC{
         }
         else if(ACStartingTime == -1)
         {
-            //pass;
+            promptUpdateFunction("Today your pattern war irregular compared to this day during the previous weeks, is this a pattern that could continue happening?");
         }
         else if (time == ACStartingTime - 2 && !this.isHome){
             this.startAdv = true;
@@ -237,9 +233,9 @@ function printOutput(ourAC, time, temperature){
 They can not contain any values and must be updated to contain reference to the correct function to give 
 the correct behaviour.
 */
+function doNothing(){};
 var acceptFunction = doNothing;
 var declineFunction = doNothing;
-function doNothing(){};
 function promptCallback(bool){
     if(bool){
         outputElement.appendChild(document.createTextNode("Changes accepted!"));
