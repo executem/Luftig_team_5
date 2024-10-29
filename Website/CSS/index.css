@@ -130,7 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 6vw;
+  margin-top: 2vw;
   align-items: center;
 
 }
@@ -302,3 +302,4 @@ align-content:center ;
   background-color: orange;
   cursor: pointer;
 }
+
