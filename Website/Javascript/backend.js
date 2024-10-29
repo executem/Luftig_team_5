@@ -27,18 +27,7 @@ ACStartingTimeMap = startingTimeMap(weekQueue);
 
 var exampleWeek = generateTypicalWeek();
 var dayIndex = 1;
-    function timeLoop() {     
-      setTimeout(function() { 
-            outputElement.appendChild(document.createTextNode("Current temp: " + ourRoom.getTemperature() + " - "));
-            ourRoom.updateAC(i)
-            ourRoom.updateTemp();
-            printOutput(ourRoom.getAC(), i); 
-        i++;                    
-        if (i < 24) {       
-          timeLoop();   
-        }                       
-      }, 1000)
-    }
+
 function startOutput(){
     outputElement.innerHTML='\n';
     if(ACStartingTimeMap.get(dayIndex) == -1){
