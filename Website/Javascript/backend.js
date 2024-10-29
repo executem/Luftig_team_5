@@ -1,27 +1,25 @@
 let exampleTemperature = [16, 17, 19, 20, 23, 25, 25, 27, 27, 28, 28, 28, 28, 28, 28, 27, 28, 28, 27, 27, 25, 23, 20, 18]
 
 const outputElement = document.getElementById("output");
-
+var newDay = false;
 
 //create abject reachable from chart.js
 window.sharedData = {
     acPower: [],
     roomTemperature: [],
     time: [],
-    text: []
-    
+    newDate: false
 }; 
+
 var promptUpdateFunction = null;
 //Imports function into this class
 function initPromptBox(promptFunc){
 promptUpdateFunction = promptFunc; 
 }
-// Call to update prompt box
-function updatePromptBox(text){
-promptUpdateFunction(text);
-}
 
 
+
+var dayIndex = 1;
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
 
@@ -36,9 +34,8 @@ var dayIndex = 1;
             ourRoom.updateTemp();
             printOutput(ourRoom.getAC(), i); 
         i++;                    
-        if (i < 24) {           
+        if (i < 24) {       
           timeLoop();   
-                 
         }                       
       }, 1000)
     }
@@ -48,21 +45,29 @@ function startOutput(){
         outputElement.appendChild(document.createTextNode("The program has recognized this day as unpredictable\n\n"));
     }
     var i = 0;
+    window.sharedData.newDate = true;
     ourRoom = new Room(20); 
+    newDay = false;
     function timeLoop(dayIndex) { 
         let tempPower = 100;
         let tempIsHome = true;
         setTimeout(function() { 
-            tempPower = ourRoom.getAC().getPower(); // change to getters on rows
-            tempIsHome = ourRoom.getAC().getIsHome();
-            ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
-            ourRoom.updateTemp(i);
+            if(i == 24){
+                newDay = true;
+            }
+            if(newDay == false){
+                tempPower = ourRoom.getAC().getPower(); // change to getters on rows
+                tempIsHome = ourRoom.getAC().getIsHome();
+                //console.log(ACStartingTimeMap.get(dayIndex));
+                ourRoom.updateAC(i, exampleWeek.get(dayIndex), ACStartingTimeMap.get(dayIndex));
+                ourRoom.updateTemp(i);
+                }
 
             i++;                    
             if (i < 24) {           
                 timeLoop(dayIndex);           
             }                 
-        }, 1000)
+        }, 100)
     }
     
     timeLoop(dayIndex);
@@ -96,8 +101,7 @@ class AC{
     calculateAC(time, dayData, ACStartingTime, curTemp) {
         if(dayData.get(time) == "go"){
             this.isHome = false;
-            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off | "));
-
+            outputElement.appendChild(document.createTextNode("Person leaves, AC turns off | "));        
         }
         else if(dayData.get(time) == "come"){
             this.isHome = true;  
@@ -105,7 +109,7 @@ class AC{
         }
         else if(ACStartingTime == -1)
         {
-            //pass;
+            promptUpdateFunction("Today your pattern war irregular compared to this day during the previous weeks, is this a pattern that could continue happening?");
         }
         else if (time == ACStartingTime - 2 && !this.isHome){
             this.startAdv = true;
@@ -214,9 +218,9 @@ function printOutput(ourAC, time, temperature){
 They can not contain any values and must be updated to contain reference to the correct function to give 
 the correct behaviour.
 */
+function doNothing(){};
 var acceptFunction = doNothing;
 var declineFunction = doNothing;
-function doNothing(){};
 function promptCallback(bool){
     if(bool){
         outputElement.appendChild(document.createTextNode("Changes accepted!"));
