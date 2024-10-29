@@ -17,8 +17,6 @@ function initPromptBox(promptFunc){
 promptUpdateFunction = promptFunc; 
 }
 
-
-
 var dayIndex = 1;
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
