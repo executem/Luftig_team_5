@@ -25,14 +25,7 @@ promptUpdateFunction(text);
 var weekQueue = generateWeekList(4);
 var ACStartingTimeMap = new Map();
 
-for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-    var ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
-    let uD = unpredictableDay(weekQueue, dayIndex, ACStartingTime);
-    if(uD){
-        ACStartingTime = -1;
-    }
-    ACStartingTimeMap.set(dayIndex, ACStartingTime);
-}
+ACStartingTimeMap = startingTimeMap(weekQueue);
 
 var exampleWeek = generateTypicalWeek();
 var dayIndex = 1;
@@ -80,14 +73,7 @@ function startOutput(){
         weekQueue.push(exampleWeek);
         weekQueue.shift();
         exampleWeek = generateTypicalWeek();
-        for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-            var ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
-            let uD = unpredictableDay(weekQueue, dayIndex, ACStartingTime)
-            if(uD){
-                ACStartingTime = -1;
-            }
-            ACStartingTimeMap.set(dayIndex, ACStartingTime);
-        }
+        ACStartingTimeMap = startingTimeMap(weekQueue);
     }
 }
 
@@ -310,4 +296,17 @@ function unpredictableDay(listOfWeeks, dayIndex, averageComeTime) {
     else{
         return false;
     }
+}
+
+function startingTimeMap(weekQueue){
+    var ACStartingTimeMap = new Map();
+    for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+        var ACStartingTime = Math.floor(calculateAverage(weekQueue, dayIndex));
+        let uD = unpredictableDay(weekQueue, dayIndex, ACStartingTime);
+        if(uD){
+            ACStartingTime = -1;
+        }
+        ACStartingTimeMap.set(dayIndex, ACStartingTime);
+    }
+    return ACStartingTimeMap;
 }
